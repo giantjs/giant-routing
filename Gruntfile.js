@@ -4,20 +4,20 @@ module.exports = function (grunt) {
 
     var params = {
         files: [
-            'js/namespace.js',
-            'js/routingEventSpace.js',
-            'js/Route.js',
-            'js/RoutingEvent.js',
-            'js/LocationProxy.js',
-            'js/HashProxy.js',
-            'js/PushStateProxy.js',
-            'js/SilentProxy.js',
-            'js/Router.js',
-            'js/exports.js'
+            'src/namespace.js',
+            'src/routingEventSpace.js',
+            'src/Route.js',
+            'src/RoutingEvent.js',
+            'src/LocationProxy.js',
+            'src/HashProxy.js',
+            'src/PushStateProxy.js',
+            'src/SilentProxy.js',
+            'src/Router.js',
+            'src/exports.js'
         ],
 
         test: [
-            'js/jsTestDriver.conf'
+            'src/jsTestDriver.conf'
         ],
 
         globals: {}
