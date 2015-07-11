@@ -3,7 +3,8 @@
 /** @namespace */
 var giant = giant || require('giant-namespace');
 
-gint.usePushState = false;
+// TODO: Document.
+giant.usePushState = false;
 
 if (typeof require === 'function') {
     require('giant-assertion');
