@@ -1,6 +1,6 @@
 {
-    "name"           : "milkman",
-    "version"        : "0.5.0",
+    "name"           : "giant-routing",
+    "version"        : "0.0.3",
     "description"    : "Routing framework",
     "keywords"       : [
         "routing",
@@ -14,7 +14,7 @@
     "license"        : "MIT",
     "repository"     : {
         "type": "git",
-        "url" : "git://github.com/danstocker/milkman.git"
+        "url" : "git@github.com:giantjs/giant-routing.git"
     },
     "dependencies"   : {
         "dessert": "~0.3.2",
