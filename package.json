@@ -17,11 +17,11 @@
         "url" : "git@github.com:giantjs/giant-routing.git"
     },
     "dependencies"   : {
-        "dessert": "~0.3.2",
-        "evan"   : "~0.8.0",
-        "q"      : "^1.3.0",
-        "sntls"  : "~0.21.0",
-        "troop"  : "~0.9.0"
+        "giant-assertion": "0.0.3",
+        "giant-data"     : "0.0.3",
+        "giant-event"    : "0.0.3",
+        "giant-oop"      : "0.0.3",
+        "q"              : "^1.3.0"
     },
     "devDependencies": {
         "phil"                : "~0.2.3",
@@ -37,7 +37,7 @@
         "QUnitAdapter"        : "https://dl.dropboxusercontent.com/u/9258903/packages/QUnitAdapter-0.1.0.tgz"
     },
     "files"          : [
-        "milkman.js"
+        "giant-routing.js"
     ],
-    "main"           : "milkman.js"
+    "main"           : "giant-routing.js"
 }
