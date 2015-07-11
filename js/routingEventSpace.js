@@ -1,10 +1,10 @@
-/*global dessert, troop, sntls, evan, milkman */
-troop.postpone(milkman, 'routingEventSpace', function () {
+/*global giant, giant, giant, giant, giant */
+giant.postpone(giant, 'routingEventSpace', function () {
     "use strict";
 
     /**
      * Dedicated event space for routing events.
-     * @type {evan.EventSpace}
+     * @type {giant.EventSpace}
      */
-    milkman.routingEventSpace = evan.EventSpace.create();
+    giant.routingEventSpace = giant.EventSpace.create();
 });

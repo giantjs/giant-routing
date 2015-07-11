@@ -1,26 +1,26 @@
-/*global dessert, troop, sntls, evan, milkman */
-troop.postpone(milkman, 'HashProxy', function () {
+/*global giant, giant, giant, giant, giant */
+giant.postpone(giant, 'HashProxy', function () {
     "use strict";
 
-    var base = milkman.LocationProxy,
+    var base = giant.LocationProxy,
         self = base.extend();
 
     /**
      * Creates a HashProxy instance.
      * You may create a HashProxy instance by instantiating LocationProxy under a browser environment,
-     * and when the config variable milkman.usePushState is set to false (default).
-     * @name milkman.HashProxy.create
+     * and when the config variable giant.usePushState is set to false (default).
+     * @name giant.HashProxy.create
      * @function
-     * @returns {milkman.HashProxy}
+     * @returns {giant.HashProxy}
      */
 
     /**
      * Implements low-level routing for URL hash-based applications.
      * @class
-     * @extends milkman.LocationProxy
+     * @extends giant.LocationProxy
      */
-    milkman.HashProxy = self
-        .addPrivateMethods(/** @lends milkman.HashProxy# */{
+    giant.HashProxy = self
+        .addPrivateMethods(/** @lends giant.HashProxy# */{
             /**
              * Effectuates the specified hash in the URL.
              * @param {string} hash Valid hash expression ("#foo")
@@ -38,14 +38,14 @@ troop.postpone(milkman, 'HashProxy', function () {
                 document.location = location;
             }
         })
-        .addMethods(/** @lends milkman.HashProxy# */{
+        .addMethods(/** @lends giant.HashProxy# */{
             /**
              * Sets the current application state via the URL hash.
-             * @param {milkman.Route} route
-             * @returns {milkman.HashProxy}
+             * @param {giant.Route} route
+             * @returns {giant.HashProxy}
              */
             setRoute: function (route) {
-                dessert.isRoute(route, "Invalid route");
+                giant.isRoute(route, "Invalid route");
 
                 var currentRoute = this.getRoute(),
                     hash = '#' + route.toString();
@@ -69,17 +69,17 @@ troop.postpone(milkman, 'HashProxy', function () {
              * @ignore
              */
             onRouteChange: function (event) {
-                milkman.Router.create().onRouteChange(event);
+                giant.Router.create().onRouteChange(event);
             }
         });
 });
 
-troop.amendPostponed(milkman, 'LocationProxy', function () {
+giant.amendPostponed(giant, 'LocationProxy', function () {
     "use strict";
 
-    milkman.LocationProxy
-        .addSurrogate(milkman, 'HashProxy', function () {
-            return window && milkman.usePushState === false;
+    giant.LocationProxy
+        .addSurrogate(giant, 'HashProxy', function () {
+            return window && giant.usePushState === false;
         });
 });
 
@@ -89,8 +89,8 @@ troop.amendPostponed(milkman, 'LocationProxy', function () {
     if (window) {
         // reacting to hash changes
         window.addEventListener('hashchange', function (event) {
-            if (!milkman.usePushState) {
-                milkman.LocationProxy.create().onRouteChange(event);
+            if (!giant.usePushState) {
+                giant.LocationProxy.create().onRouteChange(event);
             }
         });
     }

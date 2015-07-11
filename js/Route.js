@@ -1,22 +1,22 @@
-/*global dessert, troop, sntls, evan, milkman */
-troop.postpone(milkman, 'Route', function () {
+/*global giant, giant, giant, giant, giant */
+giant.postpone(giant, 'Route', function () {
     "use strict";
 
-    var base = troop.Base,
+    var base = giant.Base,
         self = base.extend();
 
     /**
      * Creates a Route instance.
-     * You may create route instances by conversion from string, array, and sntls.Path instances
+     * You may create route instances by conversion from string, array, and giant.Path instances
      * by calling '.toRoute()' on them.
      * @example
      * 'user/joe'.toRoute().navigateTo();
      * // or to capture events
      * [].toRoute().subscribeTo(...);
-     * @name milkman.Route.create
+     * @name giant.Route.create
      * @function
-     * @param {sntls.Path} routePath
-     * @returns {milkman.Route}
+     * @param {giant.Path} routePath
+     * @returns {giant.Route}
      */
 
     /**
@@ -25,12 +25,12 @@ troop.postpone(milkman, 'Route', function () {
      * mechanism.
      * This is the class you'll ultimately use for routing, both for navigation and for intercepting routing events.
      * @class
-     * @extends troop.Base
-     * @extends evan.Evented
+     * @extends giant.Base
+     * @extends giant.Evented
      */
-    milkman.Route = self
-        .addTraitAndExtend(evan.Evented)
-        .addConstants(/** @lends milkman.Route */{
+    giant.Route = self
+        .addTraitAndExtend(giant.Evented)
+        .addConstants(/** @lends giant.Route */{
             /**
              * Root path for all route event paths.
              * @constant
@@ -38,17 +38,17 @@ troop.postpone(milkman, 'Route', function () {
              */
             ROUTE_EVENT_PATH_ROOT: 'route'
         })
-        .addMethods(/** @lends milkman.Route# */{
+        .addMethods(/** @lends giant.Route# */{
             /**
-             * @param {sntls.Path} routePath
+             * @param {giant.Path} routePath
              * @ignore
              */
             init: function (routePath) {
-                dessert.isPath(routePath, "Invalid route path");
+                giant.isPath(routePath, "Invalid route path");
 
                 /**
                  * Path associated with route.
-                 * @type {sntls.Path}
+                 * @type {giant.Path}
                  */
                 this.routePath = routePath;
 
@@ -56,13 +56,13 @@ troop.postpone(milkman, 'Route', function () {
                     .prependKey(this.ROUTE_EVENT_PATH_ROOT);
 
                 // setting event path as self
-                this.setEventSpace(milkman.routingEventSpace)
+                this.setEventSpace(giant.routingEventSpace)
                     .setEventPath(eventPath);
             },
 
             /**
              * Tells if the specified route is equivalent to the current one.
-             * @param {milkman.Route} route
+             * @param {giant.Route} route
              * @returns {boolean}
              */
             equals: function (route) {
@@ -71,20 +71,20 @@ troop.postpone(milkman, 'Route', function () {
 
             /**
              * Navigates app to current route path.
-             * @returns {milkman.Route}
+             * @returns {giant.Route}
              */
             navigateTo: function () {
-                milkman.Router.create()
+                giant.Router.create()
                     .navigateToRoute(this);
                 return this;
             },
 
             /**
              * Navigates app to current route silently.
-             * @returns {milkman.Route}
+             * @returns {giant.Route}
              */
             navigateToSilent: function () {
-                milkman.Router.create()
+                giant.Router.create()
                     .navigateToRouteSilent(this);
                 return this;
             },
@@ -95,7 +95,7 @@ troop.postpone(milkman, 'Route', function () {
              * @returns {Q.Promise} Resolves eventually when the async call goes through.
              */
             navigateToAsync: function () {
-                return milkman.Router.create()
+                return giant.Router.create()
                     .navigateToRouteAsync(this);
             },
 
@@ -105,7 +105,7 @@ troop.postpone(milkman, 'Route', function () {
              * @returns {Q.Promise} Resolves eventually when the last debounced call goes through.
              */
             navigateToDebounced: function () {
-                return milkman.Router.create()
+                return giant.Router.create()
                     .navigateToRouteDebounced(this);
             },
 
@@ -119,16 +119,16 @@ troop.postpone(milkman, 'Route', function () {
         });
 });
 
-troop.amendPostponed(sntls, 'Path', function () {
+giant.amendPostponed(giant, 'Path', function () {
     "use strict";
 
-    sntls.Path.addMethods(/** @lends sntls.Path */{
+    giant.Path.addMethods(/** @lends giant.Path */{
         /**
          * Converts normal path to route path.
-         * @returns {milkman.Route}
+         * @returns {giant.Route}
          */
         toRoute: function () {
-            return milkman.Route.create(this);
+            return giant.Route.create(this);
         }
     });
 });
@@ -136,42 +136,42 @@ troop.amendPostponed(sntls, 'Path', function () {
 (function () {
     "use strict";
 
-    dessert.addTypes(/** @lends dessert */{
-        /** @param {milkman.Route} expr */
+    giant.addTypes(/** @lends giant */{
+        /** @param {giant.Route} expr */
         isRoute: function (expr) {
-            return milkman.Route.isBaseOf(expr);
+            return giant.Route.isBaseOf(expr);
         },
 
-        /** @param {milkman.Route} [expr] */
+        /** @param {giant.Route} [expr] */
         isRouteOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   milkman.Route.isBaseOf(expr);
+                   giant.Route.isBaseOf(expr);
         }
     });
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         String.prototype,
         /** @lends String# */{
             /**
              * Creates a new Route instance based on the current string.
-             * @returns {milkman.Route}
+             * @returns {giant.Route}
              */
             toRoute: function () {
-                return milkman.Route.create(this.split('/').toPath());
+                return giant.Route.create(this.split('/').toPath());
             }
         },
         false, false, false
     );
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         Array.prototype,
         /** @lends Array# */{
             /**
              * Creates a new Route instance based on the current array.
-             * @returns {milkman.Route}
+             * @returns {giant.Route}
              */
             toRoute: function () {
-                return milkman.Route.create(this.toPath());
+                return giant.Route.create(this.toPath());
             }
         },
         false, false, false

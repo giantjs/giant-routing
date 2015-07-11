@@ -1,4 +1,4 @@
-/*global dessert, troop, sntls, evan, milkman */
+/*global giant, giant, giant, giant, giant */
 /*global module, test, asyncTest, start, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
@@ -7,15 +7,15 @@
 
     module("Router", {
         setup: function () {
-            milkman.Router.clearInstanceRegistry();
-            router = milkman.Router.create();
+            giant.Router.clearInstanceRegistry();
+            router = giant.Router.create();
         }
     });
 
     test("Applying route change", function () {
         expect(2);
 
-        var routingEvent = milkman.routingEventSpace.spawnEvent('milkman.route.foo')
+        var routingEvent = giant.routingEventSpace.spawnEvent('giant.route.foo')
             .setBeforeRoute('hello'.toRoute())
             .setAfterRoute('world'.toRoute());
 
@@ -34,9 +34,9 @@
     test("Re-applying route change", function () {
         expect(1);
 
-        milkman.Router.clearInstanceRegistry();
+        giant.Router.clearInstanceRegistry();
 
-        var routingEvent = milkman.routingEventSpace.spawnEvent('milkman.route.foo')
+        var routingEvent = giant.routingEventSpace.spawnEvent('giant.route.foo')
             .setBeforeRoute('hello'.toRoute())
             .setAfterRoute('hello'.toRoute());
 
@@ -54,7 +54,7 @@
     test("Pushing first routing event", function () {
         expect(4);
 
-        var routingEvent = milkman.routingEventSpace.spawnEvent('milkman.route.hello');
+        var routingEvent = giant.routingEventSpace.spawnEvent('giant.route.hello');
 
         router._nextRoutingEvents.addMocks({
             getItem: function (itemName) {
@@ -64,7 +64,7 @@
             setItem: function (itemName, itemValue) {
                 equal(itemName, 'foo', "should set queue in collection");
                 deepEqual(itemValue, [], "should pass empty queue to item setter");
-                return sntls.Collection.setItem.apply(this, arguments);
+                return giant.Collection.setItem.apply(this, arguments);
             }
         });
 
@@ -79,15 +79,15 @@
     test("Pushing subsequent routing events", function () {
         expect(2);
 
-        var routingEvent1 = milkman.routingEventSpace.spawnEvent('milkman.route.hello'),
-            routingEvent2 = milkman.routingEventSpace.spawnEvent('milkman.route.world');
+        var routingEvent1 = giant.routingEventSpace.spawnEvent('giant.route.hello'),
+            routingEvent2 = giant.routingEventSpace.spawnEvent('giant.route.world');
 
         router._pushRoutingEvent('foo', routingEvent1);
 
         router._nextRoutingEvents.addMocks({
             getItem: function (itemName) {
                 equal(itemName, 'foo', "should fetch queue from collection");
-                return sntls.Collection.getItem.apply(this, arguments);
+                return giant.Collection.getItem.apply(this, arguments);
             }
         });
 
@@ -119,21 +119,21 @@
     });
 
     test("Instantiation", function () {
-        milkman.Router.clearInstanceRegistry();
+        giant.Router.clearInstanceRegistry();
 
-        var router = milkman.Router.create();
+        var router = giant.Router.create();
 
-        ok(router.currentRoute.isA(milkman.Route), "should set currentRoute property");
+        ok(router.currentRoute.isA(giant.Route), "should set currentRoute property");
         ok(router.currentRoute.equals([].toRoute()), "should set currentRoute property to empty route");
-        ok(router._nextRoutingEvents.isA(sntls.Collection), "should set _nextRoutingEvents property");
+        ok(router._nextRoutingEvents.isA(giant.Collection), "should set _nextRoutingEvents property");
         deepEqual(router._nextRoutingEvents.items, {},
             "should set contents of _nextRoutingEvents property to empty object");
 
-        strictEqual(milkman.Router.create(), router, "should be singleton");
+        strictEqual(giant.Router.create(), router, "should be singleton");
     });
 
     test("Current route getter", function () {
-        milkman.HashProxy.addMocks({
+        giant.HashProxy.addMocks({
             getRoute: function () {
                 ok(true, "should fetch route from proxy");
                 return 'foo/bar'.toRoute();
@@ -142,9 +142,9 @@
 
         var route = router.getCurrentRoute();
 
-        milkman.HashProxy.removeMocks();
+        giant.HashProxy.removeMocks();
 
-        ok(route.isA(milkman.Route), "should return a Route instance");
+        ok(route.isA(giant.Route), "should return a Route instance");
         ok(route.routePath.equals('foo>bar'.toPath()), "should set route path to current route's path");
     });
 
@@ -152,11 +152,11 @@
         expect(5);
 
         var route = 'foo/bar'.toRoute(),
-            link = evan.pushOriginalEvent(milkman.routingEventSpace.spawnEvent('milkman.route.foo'));
+            link = giant.pushOriginalEvent(giant.routingEventSpace.spawnEvent('giant.route.foo'));
 
         router.currentRoute = 'foo/baz'.toRoute();
 
-        milkman.RoutingEvent.addMocks({
+        giant.RoutingEvent.addMocks({
             setBeforeRoute: function (beforeRoute) {
                 strictEqual(beforeRoute, router.currentRoute,
                     "should set before route to current route on router");
@@ -169,7 +169,7 @@
             },
 
             triggerSync: function (targetPath) {
-                equal(this.eventName, milkman.Router.EVENT_ROUTE_LEAVE, "should trigger route-leave event");
+                equal(this.eventName, giant.Router.EVENT_ROUTE_LEAVE, "should trigger route-leave event");
                 strictEqual(targetPath, route.eventPath, "should trigger event on specified route");
                 return this;
             }
@@ -179,7 +179,7 @@
 
         link.unLink();
 
-        milkman.RoutingEvent.removeMocks();
+        giant.RoutingEvent.removeMocks();
     });
 
     test("Navigation to the same route", function () {
@@ -189,7 +189,7 @@
 
         router.currentRoute = 'foo/bar'.toRoute();
 
-        milkman.RoutingEvent.addMocks({
+        giant.RoutingEvent.addMocks({
             triggerSync: function () {
                 ok(true, "should NOT trigger event");
             }
@@ -197,7 +197,7 @@
 
         router.navigateToRoute(route);
 
-        milkman.RoutingEvent.removeMocks();
+        giant.RoutingEvent.removeMocks();
     });
 
     test("Silent navigation", function () {
@@ -205,11 +205,11 @@
 
         var route = 'foo/bar'.toRoute(),
             routingEvent,
-            link = evan.pushOriginalEvent(milkman.routingEventSpace.spawnEvent('milkman.route.foo'));
+            link = giant.pushOriginalEvent(giant.routingEventSpace.spawnEvent('giant.route.foo'));
 
         router.currentRoute = 'foo/baz'.toRoute();
 
-        milkman.RoutingEvent.addMocks({
+        giant.RoutingEvent.addMocks({
             setBeforeRoute: function (beforeRoute) {
                 strictEqual(beforeRoute, router.currentRoute,
                     "should set before route to current route on router");
@@ -232,7 +232,7 @@
 
         link.unLink();
 
-        milkman.RoutingEvent.removeMocks();
+        giant.RoutingEvent.removeMocks();
     });
 
     test("Silent navigation to the same route", function () {
@@ -270,16 +270,16 @@
     asyncTest("Debounced navigation", function () {
         expect(2);
 
-        milkman.Router.clearInstanceRegistry();
+        giant.Router.clearInstanceRegistry();
 
-        milkman.Router.addMocks({
+        giant.Router.addMocks({
             navigateToRoute: function (route) {
                 strictEqual(this, router, "should call navigation on router instance");
                 strictEqual(route, targetRoute3, "should navigate to last route route");
             }
         });
 
-        var router = milkman.Router.create();
+        var router = giant.Router.create();
 
         var targetRoute1 = 'foo'.toRoute(),
             targetRoute2 = 'bar'.toRoute(),
@@ -294,22 +294,22 @@
 
         router.navigateToRouteDebounced(targetRoute3);
 
-        milkman.Router.removeMocks();
+        giant.Router.removeMocks();
     });
 
     test("Route leave handler", function () {
         expect(8);
 
-        var leaveEvent = milkman.routingEventSpace.spawnEvent(milkman.Router.EVENT_ROUTE_LEAVE)
+        var leaveEvent = giant.routingEventSpace.spawnEvent(giant.Router.EVENT_ROUTE_LEAVE)
                 .setBeforeRoute('foo/bar'.toRoute())
                 .setAfterRoute('hello/world'.toRoute()),
             routingEvent;
 
-        milkman.RoutingEvent.addMocks({
+        giant.RoutingEvent.addMocks({
             setOriginalEvent: function (originalEvent) {
                 routingEvent = this;
 
-                equal(this.eventName, milkman.Router.EVENT_ROUTE_CHANGE, "should spawn a route-leave event");
+                equal(this.eventName, giant.Router.EVENT_ROUTE_CHANGE, "should spawn a route-leave event");
                 strictEqual(originalEvent, leaveEvent,
                     "should set original event to leave event");
                 return this;
@@ -334,7 +334,7 @@
             }
         });
 
-        milkman.HashProxy.addMocks({
+        giant.HashProxy.addMocks({
             setRoute: function (route) {
                 equal(route.toString(), 'hello/world', "should set the current route");
             }
@@ -349,14 +349,14 @@
 
         router.onRouteLeave(leaveEvent);
 
-        milkman.RoutingEvent.removeMocks();
-        milkman.HashProxy.removeMocks();
+        giant.RoutingEvent.removeMocks();
+        giant.HashProxy.removeMocks();
     });
 
     test("Route change handler when URL has hash", function () {
-        var event = milkman.routingEventSpace.spawnEvent('milkman.route.foo');
+        var event = giant.routingEventSpace.spawnEvent('giant.route.foo');
 
-        milkman.HashProxy.addMocks({
+        giant.HashProxy.addMocks({
             getRoute: function () {
                 ok(true, "should get route from proxy");
                 return 'foo/bar'.toRoute();
@@ -376,16 +376,16 @@
 
         router.onRouteChange();
 
-        milkman.HashProxy.removeMocks();
+        giant.HashProxy.removeMocks();
     });
 
     test("Hash change handler with no hash", function () {
         expect(5);
 
-        var event = milkman.routingEventSpace.spawnEvent('milkman.route.foo'),
+        var event = giant.routingEventSpace.spawnEvent('giant.route.foo'),
             hashChangeEvent = {};
 
-        milkman.HashProxy.addMocks({
+        giant.HashProxy.addMocks({
             getRoute: function () {
                 return 'hello/world'.toRoute();
             }
@@ -398,7 +398,7 @@
             },
 
             _applyRouteChange: function (routingEvent) {
-                ok(routingEvent.isA(milkman.RoutingEvent), "should apply a routing event");
+                ok(routingEvent.isA(giant.RoutingEvent), "should apply a routing event");
                 ok(routingEvent.beforeRoute.equals('foo/bar'.toRoute()), "should set before route to old hash");
                 ok(routingEvent.afterRoute.equals('hello/world'.toRoute()), "should set after route to new hash");
                 strictEqual(routingEvent.originalEvent, hashChangeEvent,
@@ -406,20 +406,20 @@
             }
         });
 
-        milkman.Router.create().currentRoute = 'foo/bar'.toRoute();
+        giant.Router.create().currentRoute = 'foo/bar'.toRoute();
 
         router.onRouteChange(hashChangeEvent);
 
-        milkman.HashProxy.removeMocks();
+        giant.HashProxy.removeMocks();
     });
 
     test("Document load handler", function () {
         expect(5);
 
-        var event = milkman.routingEventSpace.spawnEvent('milkman.route.foo'),
+        var event = giant.routingEventSpace.spawnEvent('giant.route.foo'),
             documentLoadEvent = {};
 
-        milkman.HashProxy.addMocks({
+        giant.HashProxy.addMocks({
             getRoute: function () {
                 ok(true, "should fetch the current route");
                 return 'foo/bar'.toRoute();
@@ -428,7 +428,7 @@
 
         router.addMocks({
             _applyRouteChange: function (routingEvent) {
-                ok(routingEvent.isA(milkman.RoutingEvent), "should apply a routing event");
+                ok(routingEvent.isA(giant.RoutingEvent), "should apply a routing event");
                 equal(typeof routingEvent.beforeRoute, 'undefined', "should leave before route as undefined");
                 ok(routingEvent.afterRoute.equals('foo/bar'.toRoute()), "should set after route to current hash");
                 strictEqual(routingEvent.originalEvent, documentLoadEvent,
@@ -438,22 +438,22 @@
 
         router.onDocumentLoad(documentLoadEvent);
 
-        milkman.HashProxy.removeMocks();
+        giant.HashProxy.removeMocks();
     });
 
     test("Global route-leave handler", function () {
         expect(1);
 
-        milkman.Router.addMocks({
+        giant.Router.addMocks({
             onRouteLeave: function () {
                 ok(true, "should call router's route-leave handler");
             }
         });
 
-        milkman.routingEventSpace.spawnEvent(milkman.Router.EVENT_ROUTE_LEAVE)
+        giant.routingEventSpace.spawnEvent(giant.Router.EVENT_ROUTE_LEAVE)
             .triggerSync('foo/bar'.toRoute().eventPath);
 
-        milkman.Router.removeMocks();
+        giant.Router.removeMocks();
     });
     //
     //    test("Global route-change handler", function () {
@@ -464,11 +464,11 @@
     //        }
     //
     //        [].toRoute()
-    //            .subscribeTo(milkman.Router.EVENT_ROUTE_CHANGE, onRouteChange);
+    //            .subscribeTo(giant.Router.EVENT_ROUTE_CHANGE, onRouteChange);
     //
     //        router.navigateToRoute('hello/world'.toRoute());
     //
     //        [].toRoute()
-    //            .unsubscribeFrom(milkman.Router.EVENT_ROUTE_CHANGE, onRouteChange);
+    //            .unsubscribeFrom(giant.Router.EVENT_ROUTE_CHANGE, onRouteChange);
     //    });
 }());

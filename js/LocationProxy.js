@@ -1,27 +1,27 @@
-/*global dessert, troop, sntls, evan, milkman */
-troop.postpone(milkman, 'LocationProxy', function () {
+/*global giant, giant, giant, giant, giant */
+giant.postpone(giant, 'LocationProxy', function () {
     "use strict";
 
-    var base = troop.Base,
+    var base = giant.Base,
         self = base.extend();
 
     /**
      * Creates a LocationProxy instance.
-     * Depending on the environment (window global), and config settings (milkman.usePushState),
+     * Depending on the environment (window global), and config settings (giant.usePushState),
      * different subclasses of LocationProxy may be returned: SilentProxy under node,
      * HashProxy, or PushStateProxy under browsers.
-     * @name milkman.LocationProxy.create
+     * @name giant.LocationProxy.create
      * @function
-     * @returns {milkman.LocationProxy}
+     * @returns {giant.LocationProxy}
      */
 
     /**
      * Base class for low level routing.
      * @class
-     * @extends troop.Base
+     * @extends giant.Base
      */
-    milkman.LocationProxy = self
-        .addPrivateMethods(/** @lends milkman.LocationProxy# */{
+    giant.LocationProxy = self
+        .addPrivateMethods(/** @lends giant.LocationProxy# */{
             /**
              * @returns {string}
              * @private
@@ -39,7 +39,7 @@ troop.postpone(milkman, 'LocationProxy', function () {
                 return window.location.hash;
             }
         })
-        .addMethods(/** @lends milkman.LocationProxy# */{
+        .addMethods(/** @lends giant.LocationProxy# */{
             /** @ignore */
             init: function () {
             },
@@ -62,7 +62,7 @@ troop.postpone(milkman, 'LocationProxy', function () {
 
             /**
              * Fetches the current application route based on the current path and hash.
-             * @returns {milkman.Route}
+             * @returns {giant.Route}
              */
             getRoute: function () {
                 var pathName = this._pathNameGetterProxy().substr(1),
@@ -83,14 +83,14 @@ troop.postpone(milkman, 'LocationProxy', function () {
 
     /**
      * Sets the current route.
-     * @name milkman.LocationProxy#setRoute
-     * @param {milkman.Route} route
-     * @returns {milkman.LocationProxy}
+     * @name giant.LocationProxy#setRoute
+     * @param {giant.Route} route
+     * @returns {giant.LocationProxy}
      */
 
     /**
      * Triggered when the route changes.
-     * @name milkman.LocationProxy#onRouteChange
+     * @name giant.LocationProxy#onRouteChange
      * @function
      * @param {Event} event
      */

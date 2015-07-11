@@ -1,12 +1,12 @@
-/*global console, dessert, troop, sntls, evan, Q, window, milkman */
-troop.postpone(milkman, 'Router', function () {
+/*global console, giant, giant, giant, giant, Q, window, giant */
+giant.postpone(giant, 'Router', function () {
     "use strict";
 
     /**
      * Creates or returns the only Router instance that exists in the application.
-     * @name milkman.Router.create
+     * @name giant.Router.create
      * @function
-     * @returns {milkman.Router}
+     * @returns {giant.Router}
      */
 
     /**
@@ -14,26 +14,26 @@ troop.postpone(milkman, 'Router', function () {
      * Triggers routing events in the global routing event space.
      * Singleton.
      * @class
-     * @extends troop.Base
+     * @extends giant.Base
      */
-    milkman.Router = troop.Base.extend()
+    giant.Router = giant.Base.extend()
         .setInstanceMapper(function () {
             return 'singleton';
         })
-        .addConstants(/** @lends milkman.Router */{
+        .addConstants(/** @lends giant.Router */{
             /**
              * Signals a route change.
              * @type {string}
              * @constant
              */
-            EVENT_ROUTE_CHANGE: 'milkman.route.change',
+            EVENT_ROUTE_CHANGE: 'giant.route.change',
 
             /**
              * Signals that a route was left.
              * @type {string}
              * @constant
              */
-            EVENT_ROUTE_LEAVE: 'milkman.route.leave',
+            EVENT_ROUTE_LEAVE: 'giant.route.leave',
 
             /**
              * Width of time window in which a new debounced navigation may override the previous one.
@@ -43,10 +43,10 @@ troop.postpone(milkman, 'Router', function () {
              */
             NAVIGATION_DEBOUNCE_DELAY: 100
         })
-        .addPrivateMethods(/** @lends milkman.Router */{
+        .addPrivateMethods(/** @lends giant.Router */{
             /**
              * Applies route change as specified by the routing event.
-             * @param {milkman.RoutingEvent} routingEvent
+             * @param {giant.RoutingEvent} routingEvent
              * @private
              */
             _applyRouteChange: function (routingEvent) {
@@ -65,8 +65,8 @@ troop.postpone(milkman, 'Router', function () {
 
             /**
              * Adds routing event to the buffer for retrieval on route change matching the specified route.
-             * @param {milkman.Route} route
-             * @param {milkman.RoutingEvent} routingEvent
+             * @param {giant.Route} route
+             * @param {giant.RoutingEvent} routingEvent
              * @private
              */
             _pushRoutingEvent: function (route, routingEvent) {
@@ -84,7 +84,7 @@ troop.postpone(milkman, 'Router', function () {
 
             /**
              * Retrieves next available routing event associated with the specified hash.
-             * @param {milkman.Route} route
+             * @param {giant.Route} route
              * @returns {*}
              * @private
              */
@@ -98,38 +98,38 @@ troop.postpone(milkman, 'Router', function () {
                 }
             }
         })
-        .addMethods(/** @lends milkman.Router# */{
+        .addMethods(/** @lends giant.Router# */{
             /** @ignore */
             init: function () {
                 this.elevateMethod('navigateToRoute');
 
                 /**
                  * Current application route.
-                 * @type {milkman.Route}
+                 * @type {giant.Route}
                  */
                 this.currentRoute = [].toRoute();
 
-                /** @type {milkman.LocationProxy} */
-                this.locationProxy = milkman.LocationProxy.create();
+                /** @type {giant.LocationProxy} */
+                this.locationProxy = giant.LocationProxy.create();
 
                 /**
                  * Used in debounced navigation.
-                 * @type {sntls.Debouncer}
+                 * @type {giant.Debouncer}
                  */
                 this.navigationDebouncer = this.navigateToRoute.toDebouncer();
 
                 /**
                  * Stores routing events to be triggered after hash change.
                  * (With optional custom payload.)
-                 * @type {sntls.Collection}
+                 * @type {giant.Collection}
                  * @private
                  */
-                this._nextRoutingEvents = sntls.Collection.create();
+                this._nextRoutingEvents = giant.Collection.create();
             },
 
             /**
              * Retrieves the current hash as route path.
-             * @returns {milkman.Route}
+             * @returns {giant.Route}
              */
             getCurrentRoute: function () {
                 return this.locationProxy.getRoute();
@@ -138,14 +138,14 @@ troop.postpone(milkman, 'Router', function () {
             /**
              * Sets the application route.
              * If route has nextOriginalEvent or nextPayload set, they will be transferred to the event.
-             * @param {milkman.Route} route
-             * @returns {milkman.Router}
+             * @param {giant.Route} route
+             * @returns {giant.Router}
              */
             navigateToRoute: function (route) {
-                dessert.isRoute(route, "Invalid route");
+                giant.isRoute(route, "Invalid route");
 
                 if (!route.equals(this.currentRoute)) {
-                    milkman.routingEventSpace.spawnEvent(this.EVENT_ROUTE_LEAVE)
+                    giant.routingEventSpace.spawnEvent(this.EVENT_ROUTE_LEAVE)
                         .setBeforeRoute(this.currentRoute)
                         .setAfterRoute(route)
                         .triggerSync(route.eventPath);
@@ -157,16 +157,16 @@ troop.postpone(milkman, 'Router', function () {
             /**
              * Sets application route without altering the browser hash.
              * If route has nextOriginalEvent or nextPayload set, they will be transferred to the event.
-             * @param {milkman.Route} route
-             * @returns {milkman.Router}
+             * @param {giant.Route} route
+             * @returns {giant.Router}
              */
             navigateToRouteSilent: function (route) {
-                dessert.isRoute(route, "Invalid route");
+                giant.isRoute(route, "Invalid route");
 
                 var routingEvent;
 
                 if (!route.equals(this.currentRoute)) {
-                    routingEvent = milkman.routingEventSpace.spawnEvent(this.EVENT_ROUTE_CHANGE)
+                    routingEvent = giant.routingEventSpace.spawnEvent(this.EVENT_ROUTE_CHANGE)
                         .setBeforeRoute(this.currentRoute)
                         .setAfterRoute(route);
 
@@ -180,7 +180,7 @@ troop.postpone(milkman, 'Router', function () {
              * Navigates to the specified route asynchronously.
              * Asynchronous navigation allows the application to complete any operation
              * before leaving the current route.
-             * @param {milkman.Route} route
+             * @param {giant.Route} route
              * @returns {Q.Promise}
              */
             navigateToRouteAsync: function (route) {
@@ -198,7 +198,7 @@ troop.postpone(milkman, 'Router', function () {
             /**
              * Navigates to the specified route de-bounced. Subsequent calls to debounced navigation
              * within the allotted time frame will override previous ones.
-             * @param {milkman.Route} route
+             * @param {giant.Route} route
              * @returns {Q.Promise}
              */
             navigateToRouteDebounced: function (route) {
@@ -206,7 +206,7 @@ troop.postpone(milkman, 'Router', function () {
             },
 
             /**
-             * @param {milkman.RoutingEvent} event
+             * @param {giant.RoutingEvent} event
              * @ignore
              */
             onRouteLeave: function (event) {
@@ -217,7 +217,7 @@ troop.postpone(milkman, 'Router', function () {
                 // resuming default behavior
                 // triggering route change
                 var route = event.afterRoute,
-                    routeChangeEvent = milkman.routingEventSpace.spawnEvent(milkman.Router.EVENT_ROUTE_CHANGE)
+                    routeChangeEvent = giant.routingEventSpace.spawnEvent(giant.Router.EVENT_ROUTE_CHANGE)
                         .setOriginalEvent(event)
                         .setPayloadItems(event.payload)
                         .setBeforeRoute(event.beforeRoute)
@@ -240,7 +240,7 @@ troop.postpone(milkman, 'Router', function () {
                     routingEvent = this._shiftRoutingEvent(newRoute);
 
                 if (!routingEvent) {
-                    routingEvent = milkman.routingEventSpace.spawnEvent(milkman.Router.EVENT_ROUTE_CHANGE)
+                    routingEvent = giant.routingEventSpace.spawnEvent(giant.Router.EVENT_ROUTE_CHANGE)
                         .setBeforeRoute(this.currentRoute)
                         .setAfterRoute(newRoute)
                         .setOriginalEvent(event);
@@ -254,7 +254,7 @@ troop.postpone(milkman, 'Router', function () {
              * @ignore
              */
             onDocumentLoad: function (event) {
-                var routingEvent = milkman.routingEventSpace.spawnEvent(milkman.Router.EVENT_ROUTE_CHANGE)
+                var routingEvent = giant.routingEventSpace.spawnEvent(giant.Router.EVENT_ROUTE_CHANGE)
                     .setAfterRoute(this.locationProxy.getRoute())
                     .setOriginalEvent(event);
 
@@ -263,24 +263,24 @@ troop.postpone(milkman, 'Router', function () {
         });
 });
 
-troop.amendPostponed(milkman, 'Route', function () {
+giant.amendPostponed(giant, 'Route', function () {
     "use strict";
 
     [].toRoute()
-        .subscribeTo(milkman.Router.EVENT_ROUTE_LEAVE, function (/**milkman.RoutingEvent*/event) {
-            milkman.Router.create().onRouteLeave(event);
+        .subscribeTo(giant.Router.EVENT_ROUTE_LEAVE, function (/**giant.RoutingEvent*/event) {
+            giant.Router.create().onRouteLeave(event);
         });
 });
 
-troop.postpone(milkman, 'logRoutingEvents', function () {
+giant.postpone(giant, 'logRoutingEvents', function () {
     "use strict";
 
-    milkman.logRoutingEvents = function () {
+    giant.logRoutingEvents = function () {
         [].toRoute()
-            .subscribeTo(milkman.Router.EVENT_ROUTE_LEAVE, function (event) {
+            .subscribeTo(giant.Router.EVENT_ROUTE_LEAVE, function (event) {
                 console.info("route left", event.beforeRoute.toString(), event);
             })
-            .subscribeTo(milkman.Router.EVENT_ROUTE_CHANGE, function (event) {
+            .subscribeTo(giant.Router.EVENT_ROUTE_CHANGE, function (event) {
                 console.info("route changed", event.afterRoute.toString(), event);
             });
     };
@@ -292,7 +292,7 @@ troop.postpone(milkman, 'logRoutingEvents', function () {
     if (document) {
         // running hash change handler when document loads
         document.addEventListener('DOMContentLoaded', function (event) {
-            milkman.Router.create().onDocumentLoad(event);
+            giant.Router.create().onDocumentLoad(event);
         }, false);
     }
 }());

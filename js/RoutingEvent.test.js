@@ -1,4 +1,4 @@
-/*global dessert, troop, sntls, evan, milkman */
+/*global giant, giant, giant, giant, giant */
 /*global module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
@@ -6,8 +6,8 @@
     module("Routing Event");
 
     test("Instantiation", function () {
-        var eventSpace = evan.EventSpace.create(),
-            event = milkman.RoutingEvent.create('foo', eventSpace);
+        var eventSpace = giant.EventSpace.create(),
+            event = giant.RoutingEvent.create('foo', eventSpace);
 
         ok(event.hasOwnProperty('beforeRoute'), "should add beforeRoute property");
         equal(typeof event.beforeRoute, 'undefined', "should set beforeRoute to undefined");
@@ -16,20 +16,20 @@
     });
 
     test("Conversion from Event", function () {
-        var eventSpace = evan.EventSpace.create(),
+        var eventSpace = giant.EventSpace.create(),
             event;
 
-        event = evan.Event.create('foo', eventSpace);
-        ok(!event.isA(milkman.RoutingEvent),
+        event = giant.Event.create('foo', eventSpace);
+        ok(!event.isA(giant.RoutingEvent),
             "should not return RoutingEvent instance for event names with non-matching prefix");
 
-        event = evan.Event.create('milkman.route.foo', eventSpace);
-        ok(event.isA(milkman.RoutingEvent),
+        event = giant.Event.create('giant.route.foo', eventSpace);
+        ok(event.isA(giant.RoutingEvent),
             "should return RoutingEvent instance for event names with mathching prefix");
     });
 
     test("Before route setter", function () {
-        var event = milkman.RoutingEvent.create('foo', evan.EventSpace.create());
+        var event = giant.RoutingEvent.create('foo', giant.EventSpace.create());
 
         raises(function () {
             event.setBeforeRoute('foo');
@@ -41,7 +41,7 @@
     });
 
     test("After route setter", function () {
-        var event = milkman.RoutingEvent.create('foo', evan.EventSpace.create());
+        var event = giant.RoutingEvent.create('foo', giant.EventSpace.create());
 
         raises(function () {
             event.setAfterRoute('foo');
@@ -53,10 +53,10 @@
     });
 
     test("Cloning", function () {
-        var eventSpace = evan.EventSpace.create(),
+        var eventSpace = giant.EventSpace.create(),
             beforeRoute = 'foo'.toRoute(),
             afterRoute = 'bar'.toRoute(),
-            event = milkman.RoutingEvent.create('foo', eventSpace)
+            event = giant.RoutingEvent.create('foo', eventSpace)
                 .setBeforeRoute(beforeRoute)
                 .setAfterRoute(afterRoute),
             clonedEvent = event.clone('hello>world'.toPath());

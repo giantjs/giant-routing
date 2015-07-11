@@ -1,4 +1,4 @@
-/*global dessert, troop, sntls, evan, flock, milkman */
+/*global giant, giant, giant, giant, flock, giant */
 /*global module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
@@ -7,17 +7,17 @@
 
     test("Instantiation", function () {
         raises(function () {
-            milkman.Route.create();
+            giant.Route.create();
         }, "should raise exception on no arguments");
 
         raises(function () {
-            milkman.Route.create('foo>bar>baz');
+            giant.Route.create('foo>bar>baz');
         }, "should raise exception on invalid arguments");
 
         var routePath = 'foo>bar>baz'.toPath(),
-            route = milkman.Route.create(routePath);
+            route = giant.Route.create(routePath);
 
-        strictEqual(route.eventSpace, milkman.routingEventSpace,
+        strictEqual(route.eventSpace, giant.routingEventSpace,
             "should set event space to routing event space");
 
         strictEqual(route.routePath, routePath,
@@ -29,13 +29,13 @@
 
     test("Conversion from string", function () {
         var route = 'foo/bar'.toRoute();
-        ok(route.isA(milkman.Route), "should return a Route instance");
+        ok(route.isA(giant.Route), "should return a Route instance");
         ok(route.routePath.equals('foo>bar'.toPath()), "should set route path property based on string");
     });
 
     test("Conversion from Array", function () {
         var route = ['foo', 'bar'].toRoute();
-        ok(route.isA(milkman.Route), "should return a Route instance");
+        ok(route.isA(giant.Route), "should return a Route instance");
         ok(route.routePath.equals('foo>bar'.toPath()), "should set route path property based on array");
     });
 
@@ -43,7 +43,7 @@
         var path = 'foo>bar'.toPath(),
             route = path.toRoute();
 
-        ok(route.isA(milkman.Route), "should return a Route instance");
+        ok(route.isA(giant.Route), "should return a Route instance");
         ok(route.routePath.equals('foo>bar'.toPath()), "should set route path property based on array");
     });
 
@@ -61,7 +61,7 @@
     test("Navigation", function () {
         expect(2);
 
-        var router = milkman.Router.create(),
+        var router = giant.Router.create(),
             route = 'foo/bar'.toRoute();
 
         router.addMocks({
@@ -80,7 +80,7 @@
 
         var route = 'foo/bar'.toRoute();
 
-        milkman.Router.addMocks({
+        giant.Router.addMocks({
             navigateToRouteSilent: function (targetRoute) {
                 strictEqual(targetRoute, route, "should navigate to current route");
             }
@@ -88,7 +88,7 @@
 
         strictEqual(route.navigateToSilent(), route, "should be chainable");
 
-        milkman.Router.removeMocks();
+        giant.Router.removeMocks();
     });
 
     test("Asynchronous navigation", function () {
@@ -97,7 +97,7 @@
         var route = 'foo/bar'.toRoute(),
             promise = {};
 
-        milkman.Router.addMocks({
+        giant.Router.addMocks({
             navigateToRouteAsync: function (targetRoute) {
                 strictEqual(targetRoute, route, "should navigate to current route");
                 return promise;
@@ -106,7 +106,7 @@
 
         strictEqual(route.navigateToAsync(), promise, "should return promise returned by router");
 
-        milkman.Router.removeMocks();
+        giant.Router.removeMocks();
     });
 
     test("Debounced navigation", function () {
@@ -115,7 +115,7 @@
         var route = 'foo/bar'.toRoute(),
             promise = {};
 
-        milkman.Router.addMocks({
+        giant.Router.addMocks({
             navigateToRouteDebounced: function (targetRoute) {
                 strictEqual(targetRoute, route, "should navigate to current route");
                 return promise;
@@ -125,6 +125,6 @@
         strictEqual(route.navigateToDebounced(), promise,
             "should return promise returned by router");
 
-        milkman.Router.removeMocks();
+        giant.Router.removeMocks();
     });
 }());

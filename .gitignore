@@ -1,6 +1,6 @@
+/*.tgz
 /.idea/
-/out/
 /doc/
+/giant-routing.js
 /node_modules/
-milkman.js
-*.tgz
+/out/

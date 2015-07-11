@@ -1,4 +1,4 @@
-/*global dessert, troop, sntls, evan, flock, milkman */
+/*global giant, giant, giant, giant, flock, giant */
 /*global module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
@@ -6,7 +6,7 @@
     module("LocationProxy");
 
     test("Path name based tester", function () {
-        var locationProxy = milkman.LocationProxy.create();
+        var locationProxy = giant.LocationProxy.create();
 
         locationProxy.addMocks({
             _pathNameGetterProxy: function () {
@@ -36,7 +36,7 @@
     });
 
     test("Hash based tester", function () {
-        var locationProxy = milkman.LocationProxy.create();
+        var locationProxy = giant.LocationProxy.create();
 
         locationProxy.addMocks({
             _pathNameGetterProxy: function () {
@@ -66,7 +66,7 @@
     });
 
     test("Route getter", function () {
-        var locationProxy = milkman.LocationProxy.create(),
+        var locationProxy = giant.LocationProxy.create(),
             route;
 
         locationProxy.addMocks({
@@ -80,7 +80,7 @@
         });
 
         route = locationProxy.getRoute();
-        ok(route.isA(milkman.Route), "should return Route instance");
+        ok(route.isA(giant.Route), "should return Route instance");
         ok(route.equals('foo/bar'.toRoute()), "should include path name when only path name is populated");
 
         locationProxy

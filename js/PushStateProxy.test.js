@@ -1,26 +1,26 @@
-/*global dessert, troop, sntls, evan, flock, milkman */
+/*global giant, giant, giant, giant, flock, giant */
 /*global module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
 
     module("PushStateProxy", {
         setup   : function () {
-            milkman.usePushState = true;
+            giant.usePushState = true;
         },
         teardown: function () {
-            milkman.usePushState = false;
+            giant.usePushState = false;
         }
     });
 
     test("Conversion from LocationHash", function () {
-        var locationProxy = milkman.LocationProxy.create();
-        ok(locationProxy.isA(milkman.PushStateProxy), "should return PushStateProxy instance");
+        var locationProxy = giant.LocationProxy.create();
+        ok(locationProxy.isA(giant.PushStateProxy), "should return PushStateProxy instance");
     });
 
     test("Changing push state path", function () {
         expect(6);
 
-        var pushStateProxy = milkman.PushStateProxy.create();
+        var pushStateProxy = giant.PushStateProxy.create();
 
         raises(function () {
             pushStateProxy.setRoute();

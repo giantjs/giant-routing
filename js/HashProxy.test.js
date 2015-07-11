@@ -1,24 +1,24 @@
-/*global dessert, troop, sntls, evan, flock, milkman */
+/*global giant, giant, giant, giant, flock, giant */
 /*global module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
 
     module("HashProxy", {
         setup: function () {
-            milkman.usePushState = false;
+            giant.usePushState = false;
         }
     });
 
     test("Conversion from LocationHash", function () {
-        var locationProxy = milkman.LocationProxy.create();
+        var locationProxy = giant.LocationProxy.create();
 
-        ok(locationProxy.isA(milkman.HashProxy), "should return HashProxy instance");
+        ok(locationProxy.isA(giant.HashProxy), "should return HashProxy instance");
     });
 
     test("Changing route", function () {
         expect(6);
 
-        var hashProxy = milkman.HashProxy.create();
+        var hashProxy = giant.HashProxy.create();
 
         raises(function () {
             hashProxy.setRoute();
@@ -50,7 +50,7 @@
     test("Hard redirection", function () {
         expect(6);
 
-        var hashProxy = milkman.HashProxy.create();
+        var hashProxy = giant.HashProxy.create();
 
         raises(function () {
             hashProxy.setRoute();

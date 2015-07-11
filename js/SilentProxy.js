@@ -1,36 +1,36 @@
-/*global dessert, troop, sntls, evan, milkman */
-troop.postpone(milkman, 'SilentProxy', function () {
+/*global giant, giant, giant, giant, giant */
+giant.postpone(giant, 'SilentProxy', function () {
     "use strict";
 
-    var base = milkman.LocationProxy,
+    var base = giant.LocationProxy,
         self = base.extend();
 
     /**
      * Creates a SilentProxy instance.
      * You may create a SilentProxy instance by instantiating LocationProxy,
      * in an environment that has no window global object (eg. node).
-     * @name milkman.SilentProxy.create
+     * @name giant.SilentProxy.create
      * @function
-     * @returns {milkman.SilentProxy}
+     * @returns {giant.SilentProxy}
      */
 
     /**
      * Silent location proxy for cases when neither HashProxy nor PushStateProxy is applicable (eg. under node).
      * @class
-     * @extends milkman.LocationProxy
+     * @extends giant.LocationProxy
      */
-    milkman.SilentProxy = self
-        .addPublic(/** @lends milkman.SilentProxy */{
+    giant.SilentProxy = self
+        .addPublic(/** @lends giant.SilentProxy */{
             /**
              * Stores the current (fake) application route.
-             * @type {milkman.Route}
+             * @type {giant.Route}
              */
             currentRoute: undefined
         })
-        .addMethods(/** @lends milkman.SilentProxy# */{
+        .addMethods(/** @lends giant.SilentProxy# */{
             /**
              * Retrieves the current (fake) application route.
-             * @returns {milkman.Route}
+             * @returns {giant.Route}
              */
             getRoute: function () {
                 return self.currentRoute;
@@ -38,27 +38,27 @@ troop.postpone(milkman, 'SilentProxy', function () {
 
             /**
              * Sets the current (fake) application route.
-             * @param {milkman.Route} route
-             * @returns {milkman.SilentProxy}
+             * @param {giant.Route} route
+             * @returns {giant.SilentProxy}
              */
             setRoute: function (route) {
-                dessert.isRoute(route, "Invalid route");
+                giant.isRoute(route, "Invalid route");
 
                 self.currentRoute = route;
 
                 // calling main location change handler with current last original event
-                milkman.Router.create().onRouteChange(evan.originalEventStack.getLastEvent());
+                giant.Router.create().onRouteChange(giant.originalEventStack.getLastEvent());
 
                 return this;
             }
         });
 });
 
-troop.amendPostponed(milkman, 'LocationProxy', function () {
+giant.amendPostponed(giant, 'LocationProxy', function () {
     "use strict";
 
-    milkman.LocationProxy
-        .addSurrogate(milkman, 'SilentProxy', function () {
+    giant.LocationProxy
+        .addSurrogate(giant, 'SilentProxy', function () {
             return !window;
         });
 });
