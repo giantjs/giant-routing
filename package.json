@@ -1,7 +1,7 @@
 {
     "name"           : "giant-routing",
     "version"        : "0.0.3",
-    "description"    : "Routing framework",
+    "description"    : "Routing module for Giant",
     "keywords"       : [
         "routing",
         "evented",
