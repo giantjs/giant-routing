@@ -151,8 +151,7 @@
     test("Navigation", function () {
         expect(5);
 
-        var route = 'foo/bar'.toRoute(),
-            link = giant.pushOriginalEvent(giant.routingEventSpace.spawnEvent('giant.route.foo'));
+        var route = 'foo/bar'.toRoute();
 
         router.currentRoute = 'foo/baz'.toRoute();
 
@@ -176,8 +175,6 @@
         });
 
         strictEqual(router.navigateToRoute(route), router, "should be chainable");
-
-        link.unlink();
 
         giant.RoutingEvent.removeMocks();
     });
@@ -204,8 +201,7 @@
         expect(4);
 
         var route = 'foo/bar'.toRoute(),
-            routingEvent,
-            link = giant.pushOriginalEvent(giant.routingEventSpace.spawnEvent('giant.route.foo'));
+            routingEvent;
 
         router.currentRoute = 'foo/baz'.toRoute();
 
@@ -229,8 +225,6 @@
         });
 
         strictEqual(router.navigateToRouteSilent(route), router, "should be chainable");
-
-        link.unlink();
 
         giant.RoutingEvent.removeMocks();
     });
