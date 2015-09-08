@@ -177,7 +177,7 @@
 
         strictEqual(router.navigateToRoute(route), router, "should be chainable");
 
-        link.unLink();
+        link.unlink();
 
         giant.RoutingEvent.removeMocks();
     });
@@ -230,7 +230,7 @@
 
         strictEqual(router.navigateToRouteSilent(route), router, "should be chainable");
 
-        link.unLink();
+        link.unlink();
 
         giant.RoutingEvent.removeMocks();
     });
