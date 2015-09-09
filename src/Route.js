@@ -145,35 +145,27 @@ giant.amendPostponed(giant, 'Path', function () {
         /** @param {giant.Route} [expr] */
         isRouteOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   giant.Route.isBaseOf(expr);
+                giant.Route.isBaseOf(expr);
         }
     });
 
-    giant.Properties.addProperties.call(
-        String.prototype,
-        /** @lends String# */{
-            /**
-             * Creates a new Route instance based on the current string.
-             * @returns {giant.Route}
-             */
-            toRoute: function () {
-                return giant.Route.create(this.split('/').toPath());
-            }
-        },
-        false, false, false
-    );
+    giant.extendBuiltIn(String.prototype, /** @lends String# */{
+        /**
+         * Creates a new Route instance based on the current string.
+         * @returns {giant.Route}
+         */
+        toRoute: function () {
+            return giant.Route.create(this.split('/').toPath());
+        }
+    });
 
-    giant.Properties.addProperties.call(
-        Array.prototype,
-        /** @lends Array# */{
-            /**
-             * Creates a new Route instance based on the current array.
-             * @returns {giant.Route}
-             */
-            toRoute: function () {
-                return giant.Route.create(this.toPath());
-            }
-        },
-        false, false, false
-    );
+    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+        /**
+         * Creates a new Route instance based on the current array.
+         * @returns {giant.Route}
+         */
+        toRoute: function () {
+            return giant.Route.create(this.toPath());
+        }
+    });
 }());
