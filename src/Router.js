@@ -1,4 +1,4 @@
-/*global console, Q, window */
+/*global giant, console, Q, window */
 giant.postpone(giant, 'Router', function () {
     "use strict";
 
