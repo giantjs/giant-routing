@@ -19,11 +19,11 @@
 
         var hashProxy = giant.HashProxy.create();
 
-        raises(function () {
+        throws(function () {
             hashProxy.setRoute();
         }, "should raise exception on missing arguments");
 
-        raises(function () {
+        throws(function () {
             hashProxy.setRoute('foo');
         }, "should raise exception on invalid arguments");
 
@@ -51,11 +51,11 @@
 
         var hashProxy = giant.HashProxy.create();
 
-        raises(function () {
+        throws(function () {
             hashProxy.setRoute();
         }, "should raise exception on missing arguments");
 
-        raises(function () {
+        throws(function () {
             hashProxy.setRoute('foo');
         }, "should raise exception on invalid arguments");
 

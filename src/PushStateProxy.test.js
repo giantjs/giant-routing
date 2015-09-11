@@ -21,11 +21,11 @@
 
         var pushStateProxy = giant.PushStateProxy.create();
 
-        raises(function () {
+        throws(function () {
             pushStateProxy.setRoute();
         }, "should raise exception on missing arguments");
 
-        raises(function () {
+        throws(function () {
             pushStateProxy.setRoute('foo');
         }, "should raise exception on invalid arguments");
 

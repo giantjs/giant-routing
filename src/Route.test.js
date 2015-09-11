@@ -5,11 +5,11 @@
     module("Route");
 
     test("Instantiation", function () {
-        raises(function () {
+        throws(function () {
             giant.Route.create();
         }, "should raise exception on no arguments");
 
-        raises(function () {
+        throws(function () {
             giant.Route.create('foo>bar>baz');
         }, "should raise exception on invalid arguments");
 

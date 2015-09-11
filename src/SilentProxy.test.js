@@ -22,11 +22,11 @@
 
         var locationProxy = giant.SilentProxy.create();
 
-        raises(function () {
+        throws(function () {
             locationProxy.setRoute();
         }, "should raise exception on missing arguments");
 
-        raises(function () {
+        throws(function () {
             locationProxy.setRoute('foo');
         }, "should raise exception on invalid arguments");
 
