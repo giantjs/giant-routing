@@ -28,7 +28,7 @@
   "devDependencies": {
   },
   "files": [
-    "giant-routing.js"
+    "lib"
   ],
-  "main": "giant-routing.js"
+  "main": "lib/giant-routing.js"
 }

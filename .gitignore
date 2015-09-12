@@ -1,6 +1,4 @@
 /*.tgz
 /.idea/
-/doc/
-/giant-routing.js
 /node_modules/
-/out/
+/lib/
