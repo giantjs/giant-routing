@@ -1,5 +1,4 @@
 /*global giant, flock */
-/*global module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
 
@@ -20,11 +19,11 @@
 
         var hashProxy = giant.HashProxy.create();
 
-        raises(function () {
+        throws(function () {
             hashProxy.setRoute();
         }, "should raise exception on missing arguments");
 
-        raises(function () {
+        throws(function () {
             hashProxy.setRoute('foo');
         }, "should raise exception on invalid arguments");
 
@@ -52,11 +51,11 @@
 
         var hashProxy = giant.HashProxy.create();
 
-        raises(function () {
+        throws(function () {
             hashProxy.setRoute();
         }, "should raise exception on missing arguments");
 
-        raises(function () {
+        throws(function () {
             hashProxy.setRoute('foo');
         }, "should raise exception on invalid arguments");
 

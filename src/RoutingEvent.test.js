@@ -1,5 +1,4 @@
 /*global giant */
-/*global module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
 
@@ -31,7 +30,7 @@
     test("Before route setter", function () {
         var event = giant.RoutingEvent.create('foo', giant.EventSpace.create());
 
-        raises(function () {
+        throws(function () {
             event.setBeforeRoute('foo');
         }, "should raise exception on invalid argument");
 
@@ -43,7 +42,7 @@
     test("After route setter", function () {
         var event = giant.RoutingEvent.create('foo', giant.EventSpace.create());
 
-        raises(function () {
+        throws(function () {
             event.setAfterRoute('foo');
         }, "should raise exception on invalid argument");
 

@@ -1,5 +1,4 @@
 /*global giant, flock */
-/*global module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
 
@@ -22,11 +21,11 @@
 
         var pushStateProxy = giant.PushStateProxy.create();
 
-        raises(function () {
+        throws(function () {
             pushStateProxy.setRoute();
         }, "should raise exception on missing arguments");
 
-        raises(function () {
+        throws(function () {
             pushStateProxy.setRoute('foo');
         }, "should raise exception on invalid arguments");
 

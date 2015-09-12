@@ -3,7 +3,8 @@ giant.postpone(giant, 'Route', function () {
     "use strict";
 
     var base = giant.Base,
-        self = base.extend();
+        self = base.extend()
+            .addTraitAndExtend(giant.Evented);
 
     /**
      * Creates a Route instance.
@@ -29,7 +30,6 @@ giant.postpone(giant, 'Route', function () {
      * @extends giant.Evented
      */
     giant.Route = self
-        .addTraitAndExtend(giant.Evented)
         .addConstants(/** @lends giant.Route */{
             /**
              * Root path for all route event paths.
