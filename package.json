@@ -1,44 +1,34 @@
 {
-    "name"           : "giant-routing",
-    "version"        : "0.0.5",
-    "description"    : "Routing module for Giant",
-    "keywords"       : [
-        "routing",
-        "evented",
-        "hash",
-        "pushstate",
-        "history"
-    ],
-    "author"         : "Dan Stocker <dan@kwaia.com>",
-    "copyright"      : "Copyright (c) 2014-2015 Dan Stocker",
-    "license"        : "MIT",
-    "repository"     : {
-        "type": "git",
-        "url" : "git@github.com:giantjs/giant-routing.git"
-    },
-    "dependencies"   : {
-        "giant-assertion": "0.0.5",
-        "giant-data"     : "0.0.5",
-        "giant-event"    : "0.0.5",
-        "giant-namespace": "0.0.5",
-        "giant-oop"      : "0.0.5",
-        "giant-utils"    : "0.0.5",
-        "q"              : "^1.4.1"
-    },
-    "devDependencies": {
-        "grunt"               : "~0.4.5",
-        "grunt-jstestdriver"  : "git://github.com/danstocker/grunt-jstestdriver.git",
-        "grunt-contrib-concat": "~0.5.1",
-        "grunt-contrib-jshint": "~0.11.1",
-        "grunt-yui-compressor": "~0.4.0",
-        "grunt-contrib-copy"  : "~0.8.0",
-        "grunt-jsdoc"         : "~0.3.3",
-        "grunt-regex-replace" : "~0.2.6",
-        "common-gruntfile"    : "git://github.com/danstocker/common-gruntfile.git#0.1.5",
-        "QUnitAdapter"        : "https://dl.dropboxusercontent.com/u/9258903/packages/QUnitAdapter-0.1.0.tgz"
-    },
-    "files"          : [
-        "giant-routing.js"
-    ],
-    "main"           : "giant-routing.js"
+  "name": "giant-routing",
+  "version": "0.0.5",
+  "description": "Routing module for Giant",
+  "keywords": [
+    "routing",
+    "evented",
+    "hash",
+    "pushstate",
+    "history"
+  ],
+  "author": "Dan Stocker <dan@kwaia.com>",
+  "copyright": "Copyright (c) 2014-2015 Dan Stocker",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:giantjs/giant-routing.git"
+  },
+  "dependencies": {
+    "giant-assertion": "0.0.5",
+    "giant-data": "0.0.5",
+    "giant-event": "0.0.5",
+    "giant-namespace": "0.0.5",
+    "giant-oop": "0.0.5",
+    "giant-utils": "0.0.5",
+    "q": "^1.4.1"
+  },
+  "devDependencies": {
+  },
+  "files": [
+    "giant-routing.js"
+  ],
+  "main": "giant-routing.js"
 }
