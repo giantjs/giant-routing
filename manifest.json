@@ -1,0 +1,18 @@
+{
+  "main": {
+    "assets": {
+      "js": [
+        "src/namespace.js",
+        "src/routingEventSpace.def.js",
+        "src/Route.def.js",
+        "src/RoutingEvent.def.js",
+        "src/LocationProxy.def.js",
+        "src/HashProxy.def.js",
+        "src/PushStateProxy.def.js",
+        "src/SilentProxy.def.js",
+        "src/Router.def.js",
+        "src/exports.def.js"
+      ]
+    }
+  }
+}
