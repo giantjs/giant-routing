@@ -83,7 +83,7 @@ giant.amendPostponed(giant, 'Event', function () {
 
     giant.Event
         .addSurrogate(giant, 'RoutingEvent', function (eventName) {
-            var prefix = 'giant.route';
+            var prefix = 'giant.Router.route';
             return eventName && eventName.substr(0, prefix.length) === prefix;
         });
 });

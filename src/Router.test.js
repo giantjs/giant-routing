@@ -14,7 +14,7 @@
     test("Applying route change", function () {
         expect(2);
 
-        var routingEvent = giant.routingEventSpace.spawnEvent('giant.route.foo')
+        var routingEvent = giant.routingEventSpace.spawnEvent('giant.Router.route.foo')
             .setBeforeRoute('hello'.toRoute())
             .setAfterRoute('world'.toRoute());
 
@@ -35,7 +35,7 @@
 
         giant.Router.clearInstanceRegistry();
 
-        var routingEvent = giant.routingEventSpace.spawnEvent('giant.route.foo')
+        var routingEvent = giant.routingEventSpace.spawnEvent('giant.Router.route.foo')
             .setBeforeRoute('hello'.toRoute())
             .setAfterRoute('hello'.toRoute());
 
@@ -53,7 +53,7 @@
     test("Pushing first routing event", function () {
         expect(4);
 
-        var routingEvent = giant.routingEventSpace.spawnEvent('giant.route.hello');
+        var routingEvent = giant.routingEventSpace.spawnEvent('giant.Router.route.hello');
 
         router._nextRoutingEvents.addMocks({
             getItem: function (itemName) {
@@ -78,8 +78,8 @@
     test("Pushing subsequent routing events", function () {
         expect(2);
 
-        var routingEvent1 = giant.routingEventSpace.spawnEvent('giant.route.hello'),
-            routingEvent2 = giant.routingEventSpace.spawnEvent('giant.route.world');
+        var routingEvent1 = giant.routingEventSpace.spawnEvent('giant.Router.route.hello'),
+            routingEvent2 = giant.routingEventSpace.spawnEvent('giant.Router.route.world');
 
         router._pushRoutingEvent('foo', routingEvent1);
 
@@ -347,7 +347,7 @@
     });
 
     test("Route change handler when URL has hash", function () {
-        var event = giant.routingEventSpace.spawnEvent('giant.route.foo');
+        var event = giant.routingEventSpace.spawnEvent('giant.Router.route.foo');
 
         giant.HashProxy.addMocks({
             getRoute: function () {
@@ -375,7 +375,7 @@
     test("Hash change handler with no hash", function () {
         expect(5);
 
-        var event = giant.routingEventSpace.spawnEvent('giant.route.foo'),
+        var event = giant.routingEventSpace.spawnEvent('giant.Router.route.foo'),
             hashChangeEvent = {};
 
         giant.HashProxy.addMocks({
@@ -409,7 +409,7 @@
     test("Document load handler", function () {
         expect(5);
 
-        var event = giant.routingEventSpace.spawnEvent('giant.route.foo'),
+        var event = giant.routingEventSpace.spawnEvent('giant.Router.route.foo'),
             documentLoadEvent = {};
 
         giant.HashProxy.addMocks({

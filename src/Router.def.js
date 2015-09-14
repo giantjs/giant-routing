@@ -26,14 +26,14 @@ giant.postpone(giant, 'Router', function () {
              * @type {string}
              * @constant
              */
-            EVENT_ROUTE_CHANGE: 'giant.route.change',
+            EVENT_ROUTE_CHANGE: 'giant.Router.route.change',
 
             /**
              * Signals that a route was left.
              * @type {string}
              * @constant
              */
-            EVENT_ROUTE_LEAVE: 'giant.route.leave',
+            EVENT_ROUTE_LEAVE: 'giant.Router.route.leave',
 
             /**
              * Width of time window in which a new debounced navigation may override the previous one.
