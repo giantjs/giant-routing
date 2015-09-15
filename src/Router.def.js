@@ -22,20 +22,6 @@ giant.postpone(giant, 'Router', function () {
         })
         .addConstants(/** @lends giant.Router */{
             /**
-             * Signals a route change.
-             * @type {string}
-             * @constant
-             */
-            EVENT_ROUTE_CHANGE: 'giant.Router.route.change',
-
-            /**
-             * Signals that a route was left.
-             * @type {string}
-             * @constant
-             */
-            EVENT_ROUTE_LEAVE: 'giant.Router.route.leave',
-
-            /**
              * Width of time window in which a new debounced navigation may override the previous one.
              * (Milliseconds)
              * @type {number}
@@ -145,7 +131,7 @@ giant.postpone(giant, 'Router', function () {
                 giant.isRoute(route, "Invalid route");
 
                 if (!route.equals(this.currentRoute)) {
-                    giant.routingEventSpace.spawnEvent(this.EVENT_ROUTE_LEAVE)
+                    giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_LEAVE)
                         .setBeforeRoute(this.currentRoute)
                         .setAfterRoute(route)
                         .triggerSync(route.eventPath);
@@ -166,7 +152,7 @@ giant.postpone(giant, 'Router', function () {
                 var routingEvent;
 
                 if (!route.equals(this.currentRoute)) {
-                    routingEvent = giant.routingEventSpace.spawnEvent(this.EVENT_ROUTE_CHANGE)
+                    routingEvent = giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_CHANGE)
                         .setBeforeRoute(this.currentRoute)
                         .setAfterRoute(route);
 
@@ -217,7 +203,7 @@ giant.postpone(giant, 'Router', function () {
                 // resuming default behavior
                 // triggering route change
                 var route = event.afterRoute,
-                    routeChangeEvent = giant.routingEventSpace.spawnEvent(giant.Router.EVENT_ROUTE_CHANGE)
+                    routeChangeEvent = giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_CHANGE)
                         .setOriginalEvent(event)
                         .setPayloadItems(event.payload)
                         .setBeforeRoute(event.beforeRoute)
@@ -240,7 +226,7 @@ giant.postpone(giant, 'Router', function () {
                     routingEvent = this._shiftRoutingEvent(newRoute);
 
                 if (!routingEvent) {
-                    routingEvent = giant.routingEventSpace.spawnEvent(giant.Router.EVENT_ROUTE_CHANGE)
+                    routingEvent = giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_CHANGE)
                         .setBeforeRoute(this.currentRoute)
                         .setAfterRoute(newRoute)
                         .setOriginalEvent(event);
@@ -254,7 +240,7 @@ giant.postpone(giant, 'Router', function () {
              * @ignore
              */
             onDocumentLoad: function (event) {
-                var routingEvent = giant.routingEventSpace.spawnEvent(giant.Router.EVENT_ROUTE_CHANGE)
+                var routingEvent = giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_CHANGE)
                     .setAfterRoute(this.locationProxy.getRoute())
                     .setOriginalEvent(event);
 
@@ -263,11 +249,27 @@ giant.postpone(giant, 'Router', function () {
         });
 });
 
+(function () {
+    "use strict";
+
+    /**
+     * Signals a route change.
+     * @constant
+     */
+    giant.EVENT_ROUTE_CHANGE = 'giant.Router.route.change';
+
+    /**
+     * Signals that a route was left.
+     * @constant
+     */
+    giant.EVENT_ROUTE_LEAVE = 'giant.Router.route.leave';
+}());
+
 giant.amendPostponed(giant, 'Route', function () {
     "use strict";
 
     [].toRoute()
-        .subscribeTo(giant.Router.EVENT_ROUTE_LEAVE, function (/**giant.RoutingEvent*/event) {
+        .subscribeTo(giant.EVENT_ROUTE_LEAVE, function (/**giant.RoutingEvent*/event) {
             giant.Router.create().onRouteLeave(event);
         });
 });
@@ -277,10 +279,10 @@ giant.postpone(giant, 'logRoutingEvents', function () {
 
     giant.logRoutingEvents = function () {
         [].toRoute()
-            .subscribeTo(giant.Router.EVENT_ROUTE_LEAVE, function (event) {
+            .subscribeTo(giant.EVENT_ROUTE_LEAVE, function (event) {
                 console.info("route left", event.beforeRoute.toString(), event);
             })
-            .subscribeTo(giant.Router.EVENT_ROUTE_CHANGE, function (event) {
+            .subscribeTo(giant.EVENT_ROUTE_CHANGE, function (event) {
                 console.info("route changed", event.afterRoute.toString(), event);
             });
     };

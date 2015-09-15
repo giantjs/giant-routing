@@ -167,7 +167,7 @@
             },
 
             triggerSync: function (targetPath) {
-                equal(this.eventName, giant.Router.EVENT_ROUTE_LEAVE, "should trigger route-leave event");
+                equal(this.eventName, giant.EVENT_ROUTE_LEAVE, "should trigger route-leave event");
                 strictEqual(targetPath, route.eventPath, "should trigger event on specified route");
                 return this;
             }
@@ -293,7 +293,7 @@
     test("Route leave handler", function () {
         expect(8);
 
-        var leaveEvent = giant.routingEventSpace.spawnEvent(giant.Router.EVENT_ROUTE_LEAVE)
+        var leaveEvent = giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_LEAVE)
                 .setBeforeRoute('foo/bar'.toRoute())
                 .setAfterRoute('hello/world'.toRoute()),
             routingEvent;
@@ -302,7 +302,7 @@
             setOriginalEvent: function (originalEvent) {
                 routingEvent = this;
 
-                equal(this.eventName, giant.Router.EVENT_ROUTE_CHANGE, "should spawn a route-leave event");
+                equal(this.eventName, giant.EVENT_ROUTE_CHANGE, "should spawn a route-leave event");
                 strictEqual(originalEvent, leaveEvent,
                     "should set original event to leave event");
                 return this;
@@ -443,7 +443,7 @@
             }
         });
 
-        giant.routingEventSpace.spawnEvent(giant.Router.EVENT_ROUTE_LEAVE)
+        giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_LEAVE)
             .triggerSync('foo/bar'.toRoute().eventPath);
 
         giant.Router.removeMocks();
@@ -457,11 +457,11 @@
     //        }
     //
     //        [].toRoute()
-    //            .subscribeTo(giant.Router.EVENT_ROUTE_CHANGE, onRouteChange);
+    //            .subscribeTo(giant.EVENT_ROUTE_CHANGE, onRouteChange);
     //
     //        router.navigateToRoute('hello/world'.toRoute());
     //
     //        [].toRoute()
-    //            .unsubscribeFrom(giant.Router.EVENT_ROUTE_CHANGE, onRouteChange);
+    //            .unsubscribeFrom(giant.EVENT_ROUTE_CHANGE, onRouteChange);
     //    });
 }());
