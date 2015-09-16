@@ -252,17 +252,19 @@ giant.postpone(giant, 'Router', function () {
 (function () {
     "use strict";
 
-    /**
-     * Signals a route change.
-     * @constant
-     */
-    giant.EVENT_ROUTE_CHANGE = 'giant.Router.route.change';
+    giant.addGlobalConstants(/** @lends giant */{
+        /**
+         * Signals a route change.
+         * @constant
+         */
+        EVENT_ROUTE_CHANGE: 'giant.Router.route.change',
 
-    /**
-     * Signals that a route was left.
-     * @constant
-     */
-    giant.EVENT_ROUTE_LEAVE = 'giant.Router.route.leave';
+        /**
+         * Signals that a route was left.
+         * @constant
+         */
+        EVENT_ROUTE_LEAVE: 'giant.Router.route.leave'
+    });
 }());
 
 giant.amendPostponed(giant, 'Route', function () {
