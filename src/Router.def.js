@@ -257,13 +257,13 @@ giant.postpone(giant, 'Router', function () {
          * Signals a route change.
          * @constant
          */
-        EVENT_ROUTE_CHANGE: 'giant.Router.route.change',
+        EVENT_ROUTE_CHANGE: 'route.change',
 
         /**
          * Signals that a route was left.
          * @constant
          */
-        EVENT_ROUTE_LEAVE: 'giant.Router.route.leave'
+        EVENT_ROUTE_LEAVE: 'route.leave'
     });
 }());
 

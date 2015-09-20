@@ -22,7 +22,7 @@
         ok(!event.isA(giant.RoutingEvent),
             "should not return RoutingEvent instance for event names with non-matching prefix");
 
-        event = giant.Event.create('giant.Router.route.foo', eventSpace);
+        event = giant.Event.create('route.foo', eventSpace);
         ok(event.isA(giant.RoutingEvent),
             "should return RoutingEvent instance for event names with mathching prefix");
     });
