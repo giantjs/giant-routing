@@ -1,8 +1,8 @@
 /*global giant */
-giant.postpone(giant, 'LocationProxy', function () {
+$oop.postpone(giant, 'LocationProxy', function () {
     "use strict";
 
-    var base = giant.Base,
+    var base = $oop.Base,
         self = base.extend();
 
     /**
@@ -18,7 +18,7 @@ giant.postpone(giant, 'LocationProxy', function () {
     /**
      * Base class for low level routing.
      * @class
-     * @extends giant.Base
+     * @extends $oop.Base
      */
     giant.LocationProxy = self
         .addPrivateMethods(/** @lends giant.LocationProxy# */{

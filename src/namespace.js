@@ -6,11 +6,13 @@ var giant = giant || require('giant-namespace');
 /** @namespace */
 var $assertion = $assertion || require('giant-assertion');
 
+/** @namespace */
+var $oop = $oop || require('giant-oop');
+
 // TODO: Document.
 giant.usePushState = false;
 
 if (typeof require === 'function') {
-    require('giant-oop');
     require('giant-data');
     require('giant-event');
     require('giant-utils');

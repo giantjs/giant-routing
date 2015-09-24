@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'RoutingEvent', function () {
+$oop.postpone(giant, 'RoutingEvent', function () {
     "use strict";
 
     var base = giant.Event,
@@ -78,7 +78,7 @@ giant.postpone(giant, 'RoutingEvent', function () {
         });
 });
 
-giant.amendPostponed(giant, 'Event', function () {
+$oop.amendPostponed(giant, 'Event', function () {
     "use strict";
 
     giant.Event

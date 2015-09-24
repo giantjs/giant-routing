@@ -1,5 +1,5 @@
 /*global giant, console, Q, window */
-giant.postpone(giant, 'Router', function () {
+$oop.postpone(giant, 'Router', function () {
     "use strict";
 
     /**
@@ -14,9 +14,9 @@ giant.postpone(giant, 'Router', function () {
      * Triggers routing events in the global routing event space.
      * Singleton.
      * @class
-     * @extends giant.Base
+     * @extends $oop.Base
      */
-    giant.Router = giant.Base.extend()
+    giant.Router = $oop.Base.extend()
         .setInstanceMapper(function () {
             return 'singleton';
         })
@@ -258,7 +258,7 @@ giant.postpone(giant, 'Router', function () {
 (function () {
     "use strict";
 
-    giant.addGlobalConstants(/** @lends giant */{
+    $oop.addGlobalConstants.call(giant, /** @lends giant */{
         /**
          * Signals a route change.
          * @constant
@@ -273,7 +273,7 @@ giant.postpone(giant, 'Router', function () {
     });
 }());
 
-giant.amendPostponed(giant, 'Route', function () {
+$oop.amendPostponed(giant, 'Route', function () {
     "use strict";
 
     [].toRoute()
@@ -282,7 +282,7 @@ giant.amendPostponed(giant, 'Route', function () {
         });
 });
 
-giant.postpone(giant, 'logRoutingEvents', function () {
+$oop.postpone(giant, 'logRoutingEvents', function () {
     "use strict";
 
     giant.logRoutingEvents = function () {

@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'HashProxy', function () {
+$oop.postpone(giant, 'HashProxy', function () {
     "use strict";
 
     var base = giant.LocationProxy,
@@ -75,7 +75,7 @@ giant.postpone(giant, 'HashProxy', function () {
         });
 });
 
-giant.amendPostponed(giant, 'LocationProxy', function () {
+$oop.amendPostponed(giant, 'LocationProxy', function () {
     "use strict";
 
     giant.LocationProxy

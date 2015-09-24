@@ -1,8 +1,8 @@
 /*global giant */
-giant.postpone(giant, 'Route', function () {
+$oop.postpone(giant, 'Route', function () {
     "use strict";
 
-    var base = giant.Base,
+    var base = $oop.Base,
         self = base.extend()
             .addTraitAndExtend(giant.Evented);
 
@@ -26,7 +26,7 @@ giant.postpone(giant, 'Route', function () {
      * mechanism.
      * This is the class you'll ultimately use for routing, both for navigation and for intercepting routing events.
      * @class
-     * @extends giant.Base
+     * @extends $oop.Base
      * @extends giant.Evented
      */
     giant.Route = self
@@ -119,7 +119,7 @@ giant.postpone(giant, 'Route', function () {
         });
 });
 
-giant.amendPostponed(giant, 'Path', function () {
+$oop.amendPostponed(giant, 'Path', function () {
     "use strict";
 
     giant.Path.addMethods(/** @lends giant.Path */{
@@ -149,7 +149,7 @@ giant.amendPostponed(giant, 'Path', function () {
         }
     });
 
-    giant.extendBuiltIn(String.prototype, /** @lends String# */{
+    $oop.extendBuiltIn(String.prototype, /** @lends String# */{
         /**
          * Creates a new Route instance based on the current string.
          * @returns {giant.Route}
@@ -159,7 +159,7 @@ giant.amendPostponed(giant, 'Path', function () {
         }
     });
 
-    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+    $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new Route instance based on the current array.
          * @returns {giant.Route}
