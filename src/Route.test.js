@@ -1,4 +1,4 @@
-/*global giant, flock */
+/*global $routing, flock */
 (function () {
     "use strict";
 
@@ -6,17 +6,17 @@
 
     test("Instantiation", function () {
         throws(function () {
-            giant.Route.create();
+            $routing.Route.create();
         }, "should raise exception on no arguments");
 
         throws(function () {
-            giant.Route.create('foo>bar>baz');
+            $routing.Route.create('foo>bar>baz');
         }, "should raise exception on invalid arguments");
 
         var routePath = 'foo>bar>baz'.toPath(),
-            route = giant.Route.create(routePath);
+            route = $routing.Route.create(routePath);
 
-        strictEqual(route.eventSpace, giant.routingEventSpace,
+        strictEqual(route.eventSpace, $routing.routingEventSpace,
             "should set event space to routing event space");
 
         strictEqual(route.routePath, routePath,
@@ -28,13 +28,13 @@
 
     test("Conversion from string", function () {
         var route = 'foo/bar'.toRoute();
-        ok(route.isA(giant.Route), "should return a Route instance");
+        ok(route.isA($routing.Route), "should return a Route instance");
         ok(route.routePath.equals('foo>bar'.toPath()), "should set route path property based on string");
     });
 
     test("Conversion from Array", function () {
         var route = ['foo', 'bar'].toRoute();
-        ok(route.isA(giant.Route), "should return a Route instance");
+        ok(route.isA($routing.Route), "should return a Route instance");
         ok(route.routePath.equals('foo>bar'.toPath()), "should set route path property based on array");
     });
 
@@ -42,7 +42,7 @@
         var path = 'foo>bar'.toPath(),
             route = path.toRoute();
 
-        ok(route.isA(giant.Route), "should return a Route instance");
+        ok(route.isA($routing.Route), "should return a Route instance");
         ok(route.routePath.equals('foo>bar'.toPath()), "should set route path property based on array");
     });
 
@@ -60,7 +60,7 @@
     test("Navigation", function () {
         expect(2);
 
-        var router = giant.Router.create(),
+        var router = $routing.Router.create(),
             route = 'foo/bar'.toRoute();
 
         router.addMocks({
@@ -79,7 +79,7 @@
 
         var route = 'foo/bar'.toRoute();
 
-        giant.Router.addMocks({
+        $routing.Router.addMocks({
             navigateToRouteSilent: function (targetRoute) {
                 strictEqual(targetRoute, route, "should navigate to current route");
             }
@@ -87,7 +87,7 @@
 
         strictEqual(route.navigateToSilent(), route, "should be chainable");
 
-        giant.Router.removeMocks();
+        $routing.Router.removeMocks();
     });
 
     test("Asynchronous navigation", function () {
@@ -96,7 +96,7 @@
         var route = 'foo/bar'.toRoute(),
             promise = {};
 
-        giant.Router.addMocks({
+        $routing.Router.addMocks({
             navigateToRouteAsync: function (targetRoute) {
                 strictEqual(targetRoute, route, "should navigate to current route");
                 return promise;
@@ -105,7 +105,7 @@
 
         strictEqual(route.navigateToAsync(), promise, "should return promise returned by router");
 
-        giant.Router.removeMocks();
+        $routing.Router.removeMocks();
     });
 
     test("Debounced navigation", function () {
@@ -114,7 +114,7 @@
         var route = 'foo/bar'.toRoute(),
             promise = {};
 
-        giant.Router.addMocks({
+        $routing.Router.addMocks({
             navigateToRouteDebounced: function (targetRoute) {
                 strictEqual(targetRoute, route, "should navigate to current route");
                 return promise;
@@ -124,6 +124,6 @@
         strictEqual(route.navigateToDebounced(), promise,
             "should return promise returned by router");
 
-        giant.Router.removeMocks();
+        $routing.Router.removeMocks();
     });
 }());

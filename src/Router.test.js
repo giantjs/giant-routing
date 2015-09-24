@@ -1,4 +1,4 @@
-/*global giant */
+/*global $routing */
 (function () {
     "use strict";
 
@@ -6,15 +6,15 @@
 
     module("Router", {
         setup: function () {
-            giant.Router.clearInstanceRegistry();
-            router = giant.Router.create();
+            $routing.Router.clearInstanceRegistry();
+            router = $routing.Router.create();
         }
     });
 
     test("Applying route change", function () {
         expect(2);
 
-        var routingEvent = giant.routingEventSpace.spawnEvent('route.foo')
+        var routingEvent = $routing.routingEventSpace.spawnEvent('route.foo')
             .setBeforeRoute('hello'.toRoute())
             .setAfterRoute('world'.toRoute());
 
@@ -33,9 +33,9 @@
     test("Re-applying route change", function () {
         expect(1);
 
-        giant.Router.clearInstanceRegistry();
+        $routing.Router.clearInstanceRegistry();
 
-        var routingEvent = giant.routingEventSpace.spawnEvent('route.foo')
+        var routingEvent = $routing.routingEventSpace.spawnEvent('route.foo')
             .setBeforeRoute('hello'.toRoute())
             .setAfterRoute('hello'.toRoute());
 
@@ -53,7 +53,7 @@
     test("Pushing first routing event", function () {
         expect(4);
 
-        var routingEvent = giant.routingEventSpace.spawnEvent('route.hello');
+        var routingEvent = $routing.routingEventSpace.spawnEvent('route.hello');
 
         router._nextRoutingEvents.addMocks({
             getItem: function (itemName) {
@@ -78,8 +78,8 @@
     test("Pushing subsequent routing events", function () {
         expect(2);
 
-        var routingEvent1 = giant.routingEventSpace.spawnEvent('route.hello'),
-            routingEvent2 = giant.routingEventSpace.spawnEvent('route.world');
+        var routingEvent1 = $routing.routingEventSpace.spawnEvent('route.hello'),
+            routingEvent2 = $routing.routingEventSpace.spawnEvent('route.world');
 
         router._pushRoutingEvent('foo', routingEvent1);
 
@@ -118,21 +118,21 @@
     });
 
     test("Instantiation", function () {
-        giant.Router.clearInstanceRegistry();
+        $routing.Router.clearInstanceRegistry();
 
-        var router = giant.Router.create();
+        var router = $routing.Router.create();
 
-        ok(router.currentRoute.isA(giant.Route), "should set currentRoute property");
+        ok(router.currentRoute.isA($routing.Route), "should set currentRoute property");
         ok(router.currentRoute.equals([].toRoute()), "should set currentRoute property to empty route");
         ok(router._nextRoutingEvents.isA($data.Collection), "should set _nextRoutingEvents property");
         deepEqual(router._nextRoutingEvents.items, {},
             "should set contents of _nextRoutingEvents property to empty object");
 
-        strictEqual(giant.Router.create(), router, "should be singleton");
+        strictEqual($routing.Router.create(), router, "should be singleton");
     });
 
     test("Current route getter", function () {
-        giant.HashProxy.addMocks({
+        $routing.HashProxy.addMocks({
             getRoute: function () {
                 ok(true, "should fetch route from proxy");
                 return 'foo/bar'.toRoute();
@@ -141,9 +141,9 @@
 
         var route = router.getCurrentRoute();
 
-        giant.HashProxy.removeMocks();
+        $routing.HashProxy.removeMocks();
 
-        ok(route.isA(giant.Route), "should return a Route instance");
+        ok(route.isA($routing.Route), "should return a Route instance");
         ok(route.routePath.equals('foo>bar'.toPath()), "should set route path to current route's path");
     });
 
@@ -154,7 +154,7 @@
 
         router.currentRoute = 'foo/baz'.toRoute();
 
-        giant.RoutingEvent.addMocks({
+        $routing.RoutingEvent.addMocks({
             setBeforeRoute: function (beforeRoute) {
                 strictEqual(beforeRoute, router.currentRoute,
                     "should set before route to current route on router");
@@ -167,7 +167,7 @@
             },
 
             triggerSync: function (targetPath) {
-                equal(this.eventName, giant.EVENT_ROUTE_LEAVE, "should trigger route-leave event");
+                equal(this.eventName, $routing.EVENT_ROUTE_LEAVE, "should trigger route-leave event");
                 strictEqual(targetPath, route.eventPath, "should trigger event on specified route");
                 return this;
             }
@@ -175,7 +175,7 @@
 
         strictEqual(router.navigateToRoute(route), router, "should be chainable");
 
-        giant.RoutingEvent.removeMocks();
+        $routing.RoutingEvent.removeMocks();
     });
 
     test("Navigation to the same route", function () {
@@ -185,7 +185,7 @@
 
         router.currentRoute = 'foo/bar'.toRoute();
 
-        giant.RoutingEvent.addMocks({
+        $routing.RoutingEvent.addMocks({
             triggerSync: function () {
                 ok(true, "should NOT trigger event");
             }
@@ -193,7 +193,7 @@
 
         router.navigateToRoute(route);
 
-        giant.RoutingEvent.removeMocks();
+        $routing.RoutingEvent.removeMocks();
     });
 
     test("Silent navigation", function () {
@@ -204,7 +204,7 @@
 
         router.currentRoute = 'foo/baz'.toRoute();
 
-        giant.RoutingEvent.addMocks({
+        $routing.RoutingEvent.addMocks({
             setBeforeRoute: function (beforeRoute) {
                 strictEqual(beforeRoute, router.currentRoute,
                     "should set before route to current route on router");
@@ -225,7 +225,7 @@
 
         strictEqual(router.navigateToRouteSilent(route), router, "should be chainable");
 
-        giant.RoutingEvent.removeMocks();
+        $routing.RoutingEvent.removeMocks();
     });
 
     test("Silent navigation to the same route", function () {
@@ -263,16 +263,16 @@
     asyncTest("Debounced navigation", function () {
         expect(2);
 
-        giant.Router.clearInstanceRegistry();
+        $routing.Router.clearInstanceRegistry();
 
-        giant.Router.addMocks({
+        $routing.Router.addMocks({
             navigateToRoute: function (route) {
                 strictEqual(this, router, "should call navigation on router instance");
                 strictEqual(route, targetRoute3, "should navigate to last route route");
             }
         });
 
-        var router = giant.Router.create();
+        var router = $routing.Router.create();
 
         var targetRoute1 = 'foo'.toRoute(),
             targetRoute2 = 'bar'.toRoute(),
@@ -287,22 +287,22 @@
 
         router.navigateToRouteDebounced(targetRoute3);
 
-        giant.Router.removeMocks();
+        $routing.Router.removeMocks();
     });
 
     test("Route leave handler", function () {
         expect(8);
 
-        var leaveEvent = giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_LEAVE)
+        var leaveEvent = $routing.routingEventSpace.spawnEvent($routing.EVENT_ROUTE_LEAVE)
                 .setBeforeRoute('foo/bar'.toRoute())
                 .setAfterRoute('hello/world'.toRoute()),
             routingEvent;
 
-        giant.RoutingEvent.addMocks({
+        $routing.RoutingEvent.addMocks({
             setOriginalEvent: function (originalEvent) {
                 routingEvent = this;
 
-                equal(this.eventName, giant.EVENT_ROUTE_CHANGE, "should spawn a route-leave event");
+                equal(this.eventName, $routing.EVENT_ROUTE_CHANGE, "should spawn a route-leave event");
                 strictEqual(originalEvent, leaveEvent,
                     "should set original event to leave event");
                 return this;
@@ -327,7 +327,7 @@
             }
         });
 
-        giant.HashProxy.addMocks({
+        $routing.HashProxy.addMocks({
             setRoute: function (route) {
                 equal(route.toString(), 'hello/world', "should set the current route");
             }
@@ -342,14 +342,14 @@
 
         router.onRouteLeave(leaveEvent);
 
-        giant.RoutingEvent.removeMocks();
-        giant.HashProxy.removeMocks();
+        $routing.RoutingEvent.removeMocks();
+        $routing.HashProxy.removeMocks();
     });
 
     test("Route change handler when URL has hash", function () {
-        var event = giant.routingEventSpace.spawnEvent('giant.Router.route.foo');
+        var event = $routing.routingEventSpace.spawnEvent('giant.Router.route.foo');
 
-        giant.HashProxy.addMocks({
+        $routing.HashProxy.addMocks({
             getRoute: function () {
                 ok(true, "should get route from proxy");
                 return 'foo/bar'.toRoute();
@@ -369,16 +369,16 @@
 
         router.onRouteChange();
 
-        giant.HashProxy.removeMocks();
+        $routing.HashProxy.removeMocks();
     });
 
     test("Hash change handler with no hash", function () {
         expect(5);
 
-        var event = giant.routingEventSpace.spawnEvent('route.foo'),
+        var event = $routing.routingEventSpace.spawnEvent('route.foo'),
             hashChangeEvent = {};
 
-        giant.HashProxy.addMocks({
+        $routing.HashProxy.addMocks({
             getRoute: function () {
                 return 'hello/world'.toRoute();
             }
@@ -391,7 +391,7 @@
             },
 
             _applyRouteChange: function (routingEvent) {
-                ok(routingEvent.isA(giant.RoutingEvent), "should apply a routing event");
+                ok(routingEvent.isA($routing.RoutingEvent), "should apply a routing event");
                 ok(routingEvent.beforeRoute.equals('foo/bar'.toRoute()), "should set before route to old hash");
                 ok(routingEvent.afterRoute.equals('hello/world'.toRoute()), "should set after route to new hash");
                 strictEqual(routingEvent.originalEvent, hashChangeEvent,
@@ -399,20 +399,20 @@
             }
         });
 
-        giant.Router.create().currentRoute = 'foo/bar'.toRoute();
+        $routing.Router.create().currentRoute = 'foo/bar'.toRoute();
 
         router.onRouteChange(hashChangeEvent);
 
-        giant.HashProxy.removeMocks();
+        $routing.HashProxy.removeMocks();
     });
 
     test("Document load handler", function () {
         expect(5);
 
-        var event = giant.routingEventSpace.spawnEvent('route.foo'),
+        var event = $routing.routingEventSpace.spawnEvent('route.foo'),
             documentLoadEvent = {};
 
-        giant.HashProxy.addMocks({
+        $routing.HashProxy.addMocks({
             getRoute: function () {
                 ok(true, "should fetch the current route");
                 return 'foo/bar'.toRoute();
@@ -421,7 +421,7 @@
 
         router.addMocks({
             _applyRouteChange: function (routingEvent) {
-                ok(routingEvent.isA(giant.RoutingEvent), "should apply a routing event");
+                ok(routingEvent.isA($routing.RoutingEvent), "should apply a routing event");
                 equal(typeof routingEvent.beforeRoute, 'undefined', "should leave before route as undefined");
                 ok(routingEvent.afterRoute.equals('foo/bar'.toRoute()), "should set after route to current hash");
                 strictEqual(routingEvent.originalEvent, documentLoadEvent,
@@ -431,22 +431,22 @@
 
         router.onDocumentLoad(documentLoadEvent);
 
-        giant.HashProxy.removeMocks();
+        $routing.HashProxy.removeMocks();
     });
 
     test("Global route-leave handler", function () {
         expect(1);
 
-        giant.Router.addMocks({
+        $routing.Router.addMocks({
             onRouteLeave: function () {
                 ok(true, "should call router's route-leave handler");
             }
         });
 
-        giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_LEAVE)
+        $routing.routingEventSpace.spawnEvent($routing.EVENT_ROUTE_LEAVE)
             .triggerSync('foo/bar'.toRoute().eventPath);
 
-        giant.Router.removeMocks();
+        $routing.Router.removeMocks();
     });
     //
     //    test("Global route-change handler", function () {
@@ -457,11 +457,11 @@
     //        }
     //
     //        [].toRoute()
-    //            .subscribeTo(giant.EVENT_ROUTE_CHANGE, onRouteChange);
+    //            .subscribeTo($routing.EVENT_ROUTE_CHANGE, onRouteChange);
     //
     //        router.navigateToRoute('hello/world'.toRoute());
     //
     //        [].toRoute()
-    //            .unsubscribeFrom(giant.EVENT_ROUTE_CHANGE, onRouteChange);
+    //            .unsubscribeFrom($routing.EVENT_ROUTE_CHANGE, onRouteChange);
     //    });
 }());

@@ -1,26 +1,26 @@
-/*global giant */
-$oop.postpone(giant, 'HashProxy', function () {
+/*global $routing */
+$oop.postpone($routing, 'HashProxy', function () {
     "use strict";
 
-    var base = giant.LocationProxy,
+    var base = $routing.LocationProxy,
         self = base.extend();
 
     /**
      * Creates a HashProxy instance.
      * You may create a HashProxy instance by instantiating LocationProxy under a browser environment,
-     * and when the config variable giant.usePushState is set to false (default).
-     * @name giant.HashProxy.create
+     * and when the config variable $routing.usePushState is set to false (default).
+     * @name $routing.HashProxy.create
      * @function
-     * @returns {giant.HashProxy}
+     * @returns {$routing.HashProxy}
      */
 
     /**
      * Implements low-level routing for URL hash-based applications.
      * @class
-     * @extends giant.LocationProxy
+     * @extends $routing.LocationProxy
      */
-    giant.HashProxy = self
-        .addPrivateMethods(/** @lends giant.HashProxy# */{
+    $routing.HashProxy = self
+        .addPrivateMethods(/** @lends $routing.HashProxy# */{
             /**
              * Effectuates the specified hash in the URL.
              * @param {string} hash Valid hash expression ("#foo")
@@ -38,11 +38,11 @@ $oop.postpone(giant, 'HashProxy', function () {
                 document.location = location;
             }
         })
-        .addMethods(/** @lends giant.HashProxy# */{
+        .addMethods(/** @lends $routing.HashProxy# */{
             /**
              * Sets the current application state via the URL hash.
-             * @param {giant.Route} route
-             * @returns {giant.HashProxy}
+             * @param {$routing.Route} route
+             * @returns {$routing.HashProxy}
              */
             setRoute: function (route) {
                 $assertion.isRoute(route, "Invalid route");
@@ -70,17 +70,17 @@ $oop.postpone(giant, 'HashProxy', function () {
              * @ignore
              */
             onRouteChange: function (event) {
-                giant.Router.create().onRouteChange(event);
+                $routing.Router.create().onRouteChange(event);
             }
         });
 });
 
-$oop.amendPostponed(giant, 'LocationProxy', function () {
+$oop.amendPostponed($routing, 'LocationProxy', function () {
     "use strict";
 
-    giant.LocationProxy
-        .addSurrogate(giant, 'HashProxy', function () {
-            return window && giant.usePushState === false;
+    $routing.LocationProxy
+        .addSurrogate($routing, 'HashProxy', function () {
+            return window && $routing.usePushState === false;
         });
 });
 
@@ -90,8 +90,8 @@ $oop.amendPostponed(giant, 'LocationProxy', function () {
     if (window) {
         // reacting to hash changes
         window.addEventListener('hashchange', function (event) {
-            if (!giant.usePushState) {
-                giant.LocationProxy.create().onRouteChange(event);
+            if (!$routing.usePushState) {
+                $routing.LocationProxy.create().onRouteChange(event);
             }
         });
     }

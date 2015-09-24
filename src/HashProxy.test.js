@@ -1,23 +1,23 @@
-/*global giant, flock */
+/*global $routing, flock */
 (function () {
     "use strict";
 
     module("HashProxy", {
         setup: function () {
-            giant.usePushState = false;
+            $routing.usePushState = false;
         }
     });
 
     test("Conversion from LocationHash", function () {
-        var locationProxy = giant.LocationProxy.create();
+        var locationProxy = $routing.LocationProxy.create();
 
-        ok(locationProxy.isA(giant.HashProxy), "should return HashProxy instance");
+        ok(locationProxy.isA($routing.HashProxy), "should return HashProxy instance");
     });
 
     test("Changing route", function () {
         expect(6);
 
-        var hashProxy = giant.HashProxy.create();
+        var hashProxy = $routing.HashProxy.create();
 
         throws(function () {
             hashProxy.setRoute();
@@ -49,7 +49,7 @@
     test("Hard redirection", function () {
         expect(6);
 
-        var hashProxy = giant.HashProxy.create();
+        var hashProxy = $routing.HashProxy.create();
 
         throws(function () {
             hashProxy.setRoute();

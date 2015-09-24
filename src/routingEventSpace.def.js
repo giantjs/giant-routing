@@ -1,10 +1,10 @@
-/*global giant */
-$oop.postpone(giant, 'routingEventSpace', function () {
+/*global $routing */
+$oop.postpone($routing, 'routingEventSpace', function () {
     "use strict";
 
     /**
      * Dedicated event space for routing events.
      * @type {$event.EventSpace}
      */
-    giant.routingEventSpace = $event.EventSpace.create();
+    $routing.routingEventSpace = $event.EventSpace.create();
 });

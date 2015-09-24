@@ -1,7 +1,7 @@
 /*jshint node:true */
 
 /** @namespace */
-var giant = giant || require('giant-namespace');
+var $routing = {};
 
 /** @namespace */
 var $assertion = $assertion || require('giant-assertion');
@@ -19,7 +19,7 @@ var $data = $data || require('giant-data');
 var $event = $event || require('giant-event');
 
 // TODO: Document.
-giant.usePushState = false;
+$routing.usePushState = false;
 
 /**
  * @namespace

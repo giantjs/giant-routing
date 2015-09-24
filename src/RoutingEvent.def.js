@@ -1,5 +1,5 @@
-/*global giant */
-$oop.postpone(giant, 'RoutingEvent', function () {
+/*global $routing */
+$oop.postpone($routing, 'RoutingEvent', function () {
     "use strict";
 
     var base = $event.Event,
@@ -8,11 +8,11 @@ $oop.postpone(giant, 'RoutingEvent', function () {
     /**
      * Creates a RoutingEvent instance. A RoutingEvent will be created when Event is instantiated,
      * passing $event.eventSpace as the event space.
-     * @name giant.RoutingEvent.create
+     * @name $routing.RoutingEvent.create
      * @function
      * @param {string} eventName Event name
      * @param {$event.EventSpace} eventSpace Event space associated with event
-     * @returns {giant.RoutingEvent}
+     * @returns {$routing.RoutingEvent}
      */
 
     /**
@@ -21,8 +21,8 @@ $oop.postpone(giant, 'RoutingEvent', function () {
      * @class
      * @extends $event.Event
      */
-    giant.RoutingEvent = self
-        .addMethods(/** @lends giant.RoutingEvent# */{
+    $routing.RoutingEvent = self
+        .addMethods(/** @lends $routing.RoutingEvent# */{
             /**
              * @param {string} eventName Event name
              * @param {$event.EventSpace} eventSpace Event space associated with event
@@ -33,21 +33,21 @@ $oop.postpone(giant, 'RoutingEvent', function () {
 
                 /**
                  * Route path before navigation.
-                 * @type {giant.Route}
+                 * @type {$routing.Route}
                  */
                 this.beforeRoute = undefined;
 
                 /**
                  * Route path after navigation.
-                 * @type {giant.Route}
+                 * @type {$routing.Route}
                  */
                 this.afterRoute = undefined;
             },
 
             /**
              * Sets 'before' route path.
-             * @param {giant.Route} beforeRoute
-             * @returns {giant.RoutingEvent}
+             * @param {$routing.Route} beforeRoute
+             * @returns {$routing.RoutingEvent}
              */
             setBeforeRoute: function (beforeRoute) {
                 $assertion.isRoute(beforeRoute, "Invalid before route");
@@ -57,8 +57,8 @@ $oop.postpone(giant, 'RoutingEvent', function () {
 
             /**
              * Sets 'after' route path.
-             * @param {giant.Route} afterRoute
-             * @returns {giant.RoutingEvent}
+             * @param {$routing.Route} afterRoute
+             * @returns {$routing.RoutingEvent}
              */
             setAfterRoute: function (afterRoute) {
                 $assertion.isRoute(afterRoute, "Invalid after route");
@@ -82,7 +82,7 @@ $oop.amendPostponed($event, 'Event', function () {
     "use strict";
 
     $event.Event
-        .addSurrogate(giant, 'RoutingEvent', function (eventName) {
+        .addSurrogate($routing, 'RoutingEvent', function (eventName) {
             var prefix = 'route';
             return eventName && eventName.substr(0, prefix.length) === prefix;
         });
@@ -91,22 +91,22 @@ $oop.amendPostponed($event, 'Event', function () {
 (function () {
     "use strict";
 
-    $assertion.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends $routing */{
         /**
          * Determines whether the specified expression is a routing event.
-         * @param {giant.RoutingEvent} expr
+         * @param {$routing.RoutingEvent} expr
          */
         isRoutingEvent: function (expr) {
-            return giant.RoutingEvent.isBaseOf(expr);
+            return $routing.RoutingEvent.isBaseOf(expr);
         },
 
         /**
          * Determines whether the specified expression is a routing event. (optional)
-         * @param {giant.RoutingEvent} expr
+         * @param {$routing.RoutingEvent} expr
          */
         isRoutingEventOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   giant.RoutingEvent.isBaseOf(expr);
+                   $routing.RoutingEvent.isBaseOf(expr);
         }
     });
 }());

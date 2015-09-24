@@ -1,5 +1,5 @@
-/*global giant */
-$oop.postpone(giant, 'Route', function () {
+/*global $routing */
+$oop.postpone($routing, 'Route', function () {
     "use strict";
 
     var base = $oop.Base,
@@ -14,10 +14,10 @@ $oop.postpone(giant, 'Route', function () {
      * 'user/joe'.toRoute().navigateTo();
      * // or to capture events
      * [].toRoute().subscribeTo(...);
-     * @name giant.Route.create
+     * @name $routing.Route.create
      * @function
      * @param {$data.Path} routePath
-     * @returns {giant.Route}
+     * @returns {$routing.Route}
      */
 
     /**
@@ -29,8 +29,8 @@ $oop.postpone(giant, 'Route', function () {
      * @extends $oop.Base
      * @extends $event.Evented
      */
-    giant.Route = self
-        .addConstants(/** @lends giant.Route */{
+    $routing.Route = self
+        .addConstants(/** @lends $routing.Route */{
             /**
              * Root path for all route event paths.
              * @constant
@@ -38,7 +38,7 @@ $oop.postpone(giant, 'Route', function () {
              */
             ROUTE_EVENT_PATH_ROOT: 'route'
         })
-        .addMethods(/** @lends giant.Route# */{
+        .addMethods(/** @lends $routing.Route# */{
             /**
              * @param {$data.Path} routePath
              * @ignore
@@ -56,13 +56,13 @@ $oop.postpone(giant, 'Route', function () {
                     .prependKey(this.ROUTE_EVENT_PATH_ROOT);
 
                 // setting event path as self
-                this.setEventSpace(giant.routingEventSpace)
+                this.setEventSpace($routing.routingEventSpace)
                     .setEventPath(eventPath);
             },
 
             /**
              * Tells if the specified route is equivalent to the current one.
-             * @param {giant.Route} route
+             * @param {$routing.Route} route
              * @returns {boolean}
              */
             equals: function (route) {
@@ -71,20 +71,20 @@ $oop.postpone(giant, 'Route', function () {
 
             /**
              * Navigates app to current route path.
-             * @returns {giant.Route}
+             * @returns {$routing.Route}
              */
             navigateTo: function () {
-                giant.Router.create()
+                $routing.Router.create()
                     .navigateToRoute(this);
                 return this;
             },
 
             /**
              * Navigates app to current route silently.
-             * @returns {giant.Route}
+             * @returns {$routing.Route}
              */
             navigateToSilent: function () {
-                giant.Router.create()
+                $routing.Router.create()
                     .navigateToRouteSilent(this);
                 return this;
             },
@@ -95,7 +95,7 @@ $oop.postpone(giant, 'Route', function () {
              * @returns {Q.Promise} Resolves eventually when the async call goes through.
              */
             navigateToAsync: function () {
-                return giant.Router.create()
+                return $routing.Router.create()
                     .navigateToRouteAsync(this);
             },
 
@@ -105,7 +105,7 @@ $oop.postpone(giant, 'Route', function () {
              * @returns {Q.Promise} Resolves eventually when the last debounced call goes through.
              */
             navigateToDebounced: function () {
-                return giant.Router.create()
+                return $routing.Router.create()
                     .navigateToRouteDebounced(this);
             },
 
@@ -125,10 +125,10 @@ $oop.amendPostponed($data, 'Path', function () {
     $data.Path.addMethods(/** @lends $data.Path */{
         /**
          * Converts normal path to route path.
-         * @returns {giant.Route}
+         * @returns {$routing.Route}
          */
         toRoute: function () {
-            return giant.Route.create(this);
+            return $routing.Route.create(this);
         }
     });
 });
@@ -136,36 +136,36 @@ $oop.amendPostponed($data, 'Path', function () {
 (function () {
     "use strict";
 
-    $assertion.addTypes(/** @lends giant */{
-        /** @param {giant.Route} expr */
+    $assertion.addTypes(/** @lends $routing */{
+        /** @param {$routing.Route} expr */
         isRoute: function (expr) {
-            return giant.Route.isBaseOf(expr);
+            return $routing.Route.isBaseOf(expr);
         },
 
-        /** @param {giant.Route} [expr] */
+        /** @param {$routing.Route} [expr] */
         isRouteOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                giant.Route.isBaseOf(expr);
+                $routing.Route.isBaseOf(expr);
         }
     });
 
     $oop.extendBuiltIn(String.prototype, /** @lends String# */{
         /**
          * Creates a new Route instance based on the current string.
-         * @returns {giant.Route}
+         * @returns {$routing.Route}
          */
         toRoute: function () {
-            return giant.Route.create(this.split('/').toPath());
+            return $routing.Route.create(this.split('/').toPath());
         }
     });
 
     $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new Route instance based on the current array.
-         * @returns {giant.Route}
+         * @returns {$routing.Route}
          */
         toRoute: function () {
-            return giant.Route.create(this.toPath());
+            return $routing.Route.create(this.toPath());
         }
     });
 }());

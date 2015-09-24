@@ -1,12 +1,12 @@
-/*global giant, console, Q, window */
-$oop.postpone(giant, 'Router', function () {
+/*global $routing, console, Q, window */
+$oop.postpone($routing, 'Router', function () {
     "use strict";
 
     /**
      * Creates or returns the only Router instance that exists in the application.
-     * @name giant.Router.create
+     * @name $routing.Router.create
      * @function
-     * @returns {giant.Router}
+     * @returns {$routing.Router}
      */
 
     /**
@@ -16,11 +16,11 @@ $oop.postpone(giant, 'Router', function () {
      * @class
      * @extends $oop.Base
      */
-    giant.Router = $oop.Base.extend()
+    $routing.Router = $oop.Base.extend()
         .setInstanceMapper(function () {
             return 'singleton';
         })
-        .addConstants(/** @lends giant.Router */{
+        .addConstants(/** @lends $routing.Router */{
             /**
              * Width of time window in which a new debounced navigation may override the previous one.
              * (Milliseconds)
@@ -29,10 +29,10 @@ $oop.postpone(giant, 'Router', function () {
              */
             NAVIGATION_DEBOUNCE_DELAY: 100
         })
-        .addPrivateMethods(/** @lends giant.Router */{
+        .addPrivateMethods(/** @lends $routing.Router */{
             /**
              * Applies route change as specified by the routing event.
-             * @param {giant.RoutingEvent} routingEvent
+             * @param {$routing.RoutingEvent} routingEvent
              * @private
              */
             _applyRouteChange: function (routingEvent) {
@@ -51,8 +51,8 @@ $oop.postpone(giant, 'Router', function () {
 
             /**
              * Adds routing event to the buffer for retrieval on route change matching the specified route.
-             * @param {giant.Route} route
-             * @param {giant.RoutingEvent} routingEvent
+             * @param {$routing.Route} route
+             * @param {$routing.RoutingEvent} routingEvent
              * @private
              */
             _pushRoutingEvent: function (route, routingEvent) {
@@ -70,7 +70,7 @@ $oop.postpone(giant, 'Router', function () {
 
             /**
              * Retrieves next available routing event associated with the specified hash.
-             * @param {giant.Route} route
+             * @param {$routing.Route} route
              * @returns {*}
              * @private
              */
@@ -84,19 +84,19 @@ $oop.postpone(giant, 'Router', function () {
                 }
             }
         })
-        .addMethods(/** @lends giant.Router# */{
+        .addMethods(/** @lends $routing.Router# */{
             /** @ignore */
             init: function () {
                 this.elevateMethod('navigateToRoute');
 
                 /**
                  * Current application route.
-                 * @type {giant.Route}
+                 * @type {$routing.Route}
                  */
                 this.currentRoute = [].toRoute();
 
-                /** @type {giant.LocationProxy} */
-                this.locationProxy = giant.LocationProxy.create();
+                /** @type {$routing.LocationProxy} */
+                this.locationProxy = $routing.LocationProxy.create();
 
                 /**
                  * Used in debounced navigation.
@@ -115,7 +115,7 @@ $oop.postpone(giant, 'Router', function () {
 
             /**
              * Retrieves the current hash as route path.
-             * @returns {giant.Route}
+             * @returns {$routing.Route}
              */
             getCurrentRoute: function () {
                 return this.locationProxy.getRoute();
@@ -124,14 +124,14 @@ $oop.postpone(giant, 'Router', function () {
             /**
              * Sets the application route.
              * If route has nextOriginalEvent or nextPayload set, they will be transferred to the event.
-             * @param {giant.Route} route
-             * @returns {giant.Router}
+             * @param {$routing.Route} route
+             * @returns {$routing.Router}
              */
             navigateToRoute: function (route) {
                 $assertion.isRoute(route, "Invalid route");
 
                 if (!route.equals(this.currentRoute)) {
-                    giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_LEAVE)
+                    $routing.routingEventSpace.spawnEvent($routing.EVENT_ROUTE_LEAVE)
                         .setBeforeRoute(this.currentRoute)
                         .setAfterRoute(route)
                         .triggerSync(route.eventPath);
@@ -143,8 +143,8 @@ $oop.postpone(giant, 'Router', function () {
             /**
              * Sets application route without altering the browser hash.
              * If route has nextOriginalEvent or nextPayload set, they will be transferred to the event.
-             * @param {giant.Route} route
-             * @returns {giant.Router}
+             * @param {$routing.Route} route
+             * @returns {$routing.Router}
              */
             navigateToRouteSilent: function (route) {
                 $assertion.isRoute(route, "Invalid route");
@@ -152,7 +152,7 @@ $oop.postpone(giant, 'Router', function () {
                 var routingEvent;
 
                 if (!route.equals(this.currentRoute)) {
-                    routingEvent = giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_CHANGE)
+                    routingEvent = $routing.routingEventSpace.spawnEvent($routing.EVENT_ROUTE_CHANGE)
                         .setBeforeRoute(this.currentRoute)
                         .setAfterRoute(route);
 
@@ -166,7 +166,7 @@ $oop.postpone(giant, 'Router', function () {
              * Navigates to the specified route asynchronously.
              * Asynchronous navigation allows the application to complete any operation
              * before leaving the current route.
-             * @param {giant.Route} route
+             * @param {$routing.Route} route
              * @returns {Q.Promise}
              */
             navigateToRouteAsync: function (route) {
@@ -184,7 +184,7 @@ $oop.postpone(giant, 'Router', function () {
             /**
              * Navigates to the specified route de-bounced. Subsequent calls to debounced navigation
              * within the allotted time frame will override previous ones.
-             * @param {giant.Route} route
+             * @param {$routing.Route} route
              * @returns {Q.Promise}
              */
             navigateToRouteDebounced: function (route) {
@@ -192,7 +192,7 @@ $oop.postpone(giant, 'Router', function () {
             },
 
             /**
-             * @param {giant.RoutingEvent} event
+             * @param {$routing.RoutingEvent} event
              * @ignore
              */
             onRouteLeave: function (event) {
@@ -203,7 +203,7 @@ $oop.postpone(giant, 'Router', function () {
                 // resuming default behavior
                 // triggering route change
                 var route = event.afterRoute,
-                    routeChangeEvent = giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_CHANGE)
+                    routeChangeEvent = $routing.routingEventSpace.spawnEvent($routing.EVENT_ROUTE_CHANGE)
                         .setOriginalEvent(event)
                         .setPayloadItems(event.payload)
                         .setBeforeRoute(event.beforeRoute)
@@ -227,7 +227,7 @@ $oop.postpone(giant, 'Router', function () {
                     routingEvent = this._shiftRoutingEvent(newRoute);
 
                 if (!routingEvent) {
-                    routingEvent = giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_CHANGE)
+                    routingEvent = $routing.routingEventSpace.spawnEvent($routing.EVENT_ROUTE_CHANGE)
                         .setBeforeRoute(this.currentRoute)
                         .setAfterRoute(newRoute)
                         .setOriginalEvent(event);
@@ -244,7 +244,7 @@ $oop.postpone(giant, 'Router', function () {
              */
             onDocumentLoad: function (event) {
                 var link = $event.pushOriginalEvent(event),
-                    routingEvent = giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_CHANGE)
+                    routingEvent = $routing.routingEventSpace.spawnEvent($routing.EVENT_ROUTE_CHANGE)
                         .setAfterRoute(this.locationProxy.getRoute())
                         .setOriginalEvent(event);
 
@@ -258,7 +258,7 @@ $oop.postpone(giant, 'Router', function () {
 (function () {
     "use strict";
 
-    $oop.addGlobalConstants.call(giant, /** @lends giant */{
+    $oop.addGlobalConstants.call($routing, /** @lends $routing */{
         /**
          * Signals a route change.
          * @constant
@@ -273,24 +273,24 @@ $oop.postpone(giant, 'Router', function () {
     });
 }());
 
-$oop.amendPostponed(giant, 'Route', function () {
+$oop.amendPostponed($routing, 'Route', function () {
     "use strict";
 
     [].toRoute()
-        .subscribeTo(giant.EVENT_ROUTE_LEAVE, function (/**giant.RoutingEvent*/event) {
-            giant.Router.create().onRouteLeave(event);
+        .subscribeTo($routing.EVENT_ROUTE_LEAVE, function (/**$routing.RoutingEvent*/event) {
+            $routing.Router.create().onRouteLeave(event);
         });
 });
 
-$oop.postpone(giant, 'logRoutingEvents', function () {
+$oop.postpone($routing, 'logRoutingEvents', function () {
     "use strict";
 
-    giant.logRoutingEvents = function () {
+    $routing.logRoutingEvents = function () {
         [].toRoute()
-            .subscribeTo(giant.EVENT_ROUTE_LEAVE, function (event) {
+            .subscribeTo($routing.EVENT_ROUTE_LEAVE, function (event) {
                 console.info("route left", event.beforeRoute.toString(), event);
             })
-            .subscribeTo(giant.EVENT_ROUTE_CHANGE, function (event) {
+            .subscribeTo($routing.EVENT_ROUTE_CHANGE, function (event) {
                 console.info("route changed", event.afterRoute.toString(), event);
             });
     };
@@ -302,7 +302,7 @@ $oop.postpone(giant, 'logRoutingEvents', function () {
     if (document) {
         // running hash change handler when document loads
         document.addEventListener('DOMContentLoaded', function (event) {
-            giant.Router.create().onDocumentLoad(event);
+            $routing.Router.create().onDocumentLoad(event);
         }, false);
     }
 }());

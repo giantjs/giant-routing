@@ -1,25 +1,25 @@
-/*global giant, flock */
+/*global $routing, flock */
 (function () {
     "use strict";
 
     module("PushStateProxy", {
         setup   : function () {
-            giant.usePushState = true;
+            $routing.usePushState = true;
         },
         teardown: function () {
-            giant.usePushState = false;
+            $routing.usePushState = false;
         }
     });
 
     test("Conversion from LocationHash", function () {
-        var locationProxy = giant.LocationProxy.create();
-        ok(locationProxy.isA(giant.PushStateProxy), "should return PushStateProxy instance");
+        var locationProxy = $routing.LocationProxy.create();
+        ok(locationProxy.isA($routing.PushStateProxy), "should return PushStateProxy instance");
     });
 
     test("Changing push state path", function () {
         expect(6);
 
-        var pushStateProxy = giant.PushStateProxy.create();
+        var pushStateProxy = $routing.PushStateProxy.create();
 
         throws(function () {
             pushStateProxy.setRoute();

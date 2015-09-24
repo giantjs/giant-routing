@@ -1,36 +1,36 @@
-/*global giant */
-$oop.postpone(giant, 'SilentProxy', function () {
+/*global $routing */
+$oop.postpone($routing, 'SilentProxy', function () {
     "use strict";
 
-    var base = giant.LocationProxy,
+    var base = $routing.LocationProxy,
         self = base.extend();
 
     /**
      * Creates a SilentProxy instance.
      * You may create a SilentProxy instance by instantiating LocationProxy,
      * in an environment that has no window global object (eg. node).
-     * @name giant.SilentProxy.create
+     * @name $routing.SilentProxy.create
      * @function
-     * @returns {giant.SilentProxy}
+     * @returns {$routing.SilentProxy}
      */
 
     /**
      * Silent location proxy for cases when neither HashProxy nor PushStateProxy is applicable (eg. under node).
      * @class
-     * @extends giant.LocationProxy
+     * @extends $routing.LocationProxy
      */
-    giant.SilentProxy = self
-        .addPublic(/** @lends giant.SilentProxy */{
+    $routing.SilentProxy = self
+        .addPublic(/** @lends $routing.SilentProxy */{
             /**
              * Stores the current (fake) application route.
-             * @type {giant.Route}
+             * @type {$routing.Route}
              */
             currentRoute: undefined
         })
-        .addMethods(/** @lends giant.SilentProxy# */{
+        .addMethods(/** @lends $routing.SilentProxy# */{
             /**
              * Retrieves the current (fake) application route.
-             * @returns {giant.Route}
+             * @returns {$routing.Route}
              */
             getRoute: function () {
                 return self.currentRoute;
@@ -38,8 +38,8 @@ $oop.postpone(giant, 'SilentProxy', function () {
 
             /**
              * Sets the current (fake) application route.
-             * @param {giant.Route} route
-             * @returns {giant.SilentProxy}
+             * @param {$routing.Route} route
+             * @returns {$routing.SilentProxy}
              */
             setRoute: function (route) {
                 $assertion.isRoute(route, "Invalid route");
@@ -47,18 +47,18 @@ $oop.postpone(giant, 'SilentProxy', function () {
                 self.currentRoute = route;
 
                 // calling main location change handler with current last original event
-                giant.Router.create().onRouteChange($event.originalEventStack.getLastEvent());
+                $routing.Router.create().onRouteChange($event.originalEventStack.getLastEvent());
 
                 return this;
             }
         });
 });
 
-$oop.amendPostponed(giant, 'LocationProxy', function () {
+$oop.amendPostponed($routing, 'LocationProxy', function () {
     "use strict";
 
-    giant.LocationProxy
-        .addSurrogate(giant, 'SilentProxy', function () {
+    $routing.LocationProxy
+        .addSurrogate($routing, 'SilentProxy', function () {
             return !window;
         });
 });

@@ -1,5 +1,5 @@
-/*global giant */
-$oop.postpone(giant, 'LocationProxy', function () {
+/*global $routing */
+$oop.postpone($routing, 'LocationProxy', function () {
     "use strict";
 
     var base = $oop.Base,
@@ -7,12 +7,12 @@ $oop.postpone(giant, 'LocationProxy', function () {
 
     /**
      * Creates a LocationProxy instance.
-     * Depending on the environment (window global), and config settings (giant.usePushState),
+     * Depending on the environment (window global), and config settings ($routing.usePushState),
      * different subclasses of LocationProxy may be returned: SilentProxy under node,
      * HashProxy, or PushStateProxy under browsers.
-     * @name giant.LocationProxy.create
+     * @name $routing.LocationProxy.create
      * @function
-     * @returns {giant.LocationProxy}
+     * @returns {$routing.LocationProxy}
      */
 
     /**
@@ -20,8 +20,8 @@ $oop.postpone(giant, 'LocationProxy', function () {
      * @class
      * @extends $oop.Base
      */
-    giant.LocationProxy = self
-        .addPrivateMethods(/** @lends giant.LocationProxy# */{
+    $routing.LocationProxy = self
+        .addPrivateMethods(/** @lends $routing.LocationProxy# */{
             /**
              * @returns {string}
              * @private
@@ -39,7 +39,7 @@ $oop.postpone(giant, 'LocationProxy', function () {
                 return window.location.hash;
             }
         })
-        .addMethods(/** @lends giant.LocationProxy# */{
+        .addMethods(/** @lends $routing.LocationProxy# */{
             /** @ignore */
             init: function () {
             },
@@ -62,7 +62,7 @@ $oop.postpone(giant, 'LocationProxy', function () {
 
             /**
              * Fetches the current application route based on the current path and hash.
-             * @returns {giant.Route}
+             * @returns {$routing.Route}
              */
             getRoute: function () {
                 var pathName = this._pathNameGetterProxy().substr(1),
@@ -83,14 +83,14 @@ $oop.postpone(giant, 'LocationProxy', function () {
 
     /**
      * Sets the current route.
-     * @name giant.LocationProxy#setRoute
-     * @param {giant.Route} route
-     * @returns {giant.LocationProxy}
+     * @name $routing.LocationProxy#setRoute
+     * @param {$routing.Route} route
+     * @returns {$routing.LocationProxy}
      */
 
     /**
      * Triggered when the route changes.
-     * @name giant.LocationProxy#onRouteChange
+     * @name $routing.LocationProxy#onRouteChange
      * @function
      * @param {Event} event
      */

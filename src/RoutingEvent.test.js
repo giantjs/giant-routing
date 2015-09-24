@@ -1,4 +1,4 @@
-/*global giant */
+/*global $routing */
 (function () {
     "use strict";
 
@@ -6,7 +6,7 @@
 
     test("Instantiation", function () {
         var eventSpace = $event.EventSpace.create(),
-            event = giant.RoutingEvent.create('foo', eventSpace);
+            event = $routing.RoutingEvent.create('foo', eventSpace);
 
         ok(event.hasOwnProperty('beforeRoute'), "should add beforeRoute property");
         equal(typeof event.beforeRoute, 'undefined', "should set beforeRoute to undefined");
@@ -19,16 +19,16 @@
             event;
 
         event = $event.Event.create('foo', eventSpace);
-        ok(!event.isA(giant.RoutingEvent),
+        ok(!event.isA($routing.RoutingEvent),
             "should not return RoutingEvent instance for event names with non-matching prefix");
 
         event = $event.Event.create('route.foo', eventSpace);
-        ok(event.isA(giant.RoutingEvent),
+        ok(event.isA($routing.RoutingEvent),
             "should return RoutingEvent instance for event names with mathching prefix");
     });
 
     test("Before route setter", function () {
-        var event = giant.RoutingEvent.create('foo', $event.EventSpace.create());
+        var event = $routing.RoutingEvent.create('foo', $event.EventSpace.create());
 
         throws(function () {
             event.setBeforeRoute('foo');
@@ -40,7 +40,7 @@
     });
 
     test("After route setter", function () {
-        var event = giant.RoutingEvent.create('foo', $event.EventSpace.create());
+        var event = $routing.RoutingEvent.create('foo', $event.EventSpace.create());
 
         throws(function () {
             event.setAfterRoute('foo');
@@ -55,7 +55,7 @@
         var eventSpace = $event.EventSpace.create(),
             beforeRoute = 'foo'.toRoute(),
             afterRoute = 'bar'.toRoute(),
-            event = giant.RoutingEvent.create('foo', eventSpace)
+            event = $routing.RoutingEvent.create('foo', eventSpace)
                 .setBeforeRoute(beforeRoute)
                 .setAfterRoute(afterRoute),
             clonedEvent = event.clone('hello>world'.toPath());

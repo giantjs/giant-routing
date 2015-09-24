@@ -1,11 +1,11 @@
-/*global giant, flock */
+/*global $routing, flock */
 (function () {
     "use strict";
 
     module("LocationProxy");
 
     test("Path name based tester", function () {
-        var locationProxy = giant.LocationProxy.create();
+        var locationProxy = $routing.LocationProxy.create();
 
         locationProxy.addMocks({
             _pathNameGetterProxy: function () {
@@ -35,7 +35,7 @@
     });
 
     test("Hash based tester", function () {
-        var locationProxy = giant.LocationProxy.create();
+        var locationProxy = $routing.LocationProxy.create();
 
         locationProxy.addMocks({
             _pathNameGetterProxy: function () {
@@ -65,7 +65,7 @@
     });
 
     test("Route getter", function () {
-        var locationProxy = giant.LocationProxy.create(),
+        var locationProxy = $routing.LocationProxy.create(),
             route;
 
         locationProxy.addMocks({
@@ -79,7 +79,7 @@
         });
 
         route = locationProxy.getRoute();
-        ok(route.isA(giant.Route), "should return Route instance");
+        ok(route.isA($routing.Route), "should return Route instance");
         ok(route.equals('foo/bar'.toRoute()), "should include path name when only path name is populated");
 
         locationProxy
