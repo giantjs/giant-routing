@@ -222,7 +222,7 @@ giant.postpone(giant, 'Router', function () {
              * @ignore
              */
             onRouteChange: function (event) {
-                var link = giant.originalEventStack.pushEvent(event),
+                var link = giant.pushOriginalEvent(event),
                     newRoute = this.locationProxy.getRoute(),
                     routingEvent = this._shiftRoutingEvent(newRoute);
 
@@ -243,7 +243,7 @@ giant.postpone(giant, 'Router', function () {
              * @ignore
              */
             onDocumentLoad: function (event) {
-                var link = giant.originalEventStack.pushEvent(event),
+                var link = giant.pushOriginalEvent(event),
                     routingEvent = giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_CHANGE)
                         .setAfterRoute(this.locationProxy.getRoute())
                         .setOriginalEvent(event);
