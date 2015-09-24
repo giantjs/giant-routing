@@ -65,6 +65,7 @@ giant.postpone(giant, 'HashProxy', function () {
             },
 
             /**
+             * TODO: Handler should not call another handler.
              * @param {Event} event
              * @ignore
              */

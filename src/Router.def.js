@@ -222,7 +222,8 @@ giant.postpone(giant, 'Router', function () {
              * @ignore
              */
             onRouteChange: function (event) {
-                var newRoute = this.locationProxy.getRoute(),
+                var link = giant.originalEventStack.pushEvent(event),
+                    newRoute = this.locationProxy.getRoute(),
                     routingEvent = this._shiftRoutingEvent(newRoute);
 
                 if (!routingEvent) {
@@ -233,6 +234,8 @@ giant.postpone(giant, 'Router', function () {
                 }
 
                 this._applyRouteChange(routingEvent);
+
+                link.unlink();
             },
 
             /**
@@ -240,11 +243,14 @@ giant.postpone(giant, 'Router', function () {
              * @ignore
              */
             onDocumentLoad: function (event) {
-                var routingEvent = giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_CHANGE)
-                    .setAfterRoute(this.locationProxy.getRoute())
-                    .setOriginalEvent(event);
+                var link = giant.originalEventStack.pushEvent(event),
+                    routingEvent = giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_CHANGE)
+                        .setAfterRoute(this.locationProxy.getRoute())
+                        .setOriginalEvent(event);
 
                 this._applyRouteChange(routingEvent);
+
+                link.unlink();
             }
         });
 });
