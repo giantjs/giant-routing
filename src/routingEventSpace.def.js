@@ -4,7 +4,7 @@ $oop.postpone(giant, 'routingEventSpace', function () {
 
     /**
      * Dedicated event space for routing events.
-     * @type {giant.EventSpace}
+     * @type {$event.EventSpace}
      */
-    giant.routingEventSpace = giant.EventSpace.create();
+    giant.routingEventSpace = $event.EventSpace.create();
 });

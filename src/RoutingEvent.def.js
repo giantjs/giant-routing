@@ -2,16 +2,16 @@
 $oop.postpone(giant, 'RoutingEvent', function () {
     "use strict";
 
-    var base = giant.Event,
+    var base = $event.Event,
         self = base.extend();
 
     /**
      * Creates a RoutingEvent instance. A RoutingEvent will be created when Event is instantiated,
-     * passing giant.eventSpace as the event space.
+     * passing $event.eventSpace as the event space.
      * @name giant.RoutingEvent.create
      * @function
      * @param {string} eventName Event name
-     * @param {giant.EventSpace} eventSpace Event space associated with event
+     * @param {$event.EventSpace} eventSpace Event space associated with event
      * @returns {giant.RoutingEvent}
      */
 
@@ -19,13 +19,13 @@ $oop.postpone(giant, 'RoutingEvent', function () {
      * Represents an event traversing the routing event space.
      * Carries information about the different route(s) involved.
      * @class
-     * @extends giant.Event
+     * @extends $event.Event
      */
     giant.RoutingEvent = self
         .addMethods(/** @lends giant.RoutingEvent# */{
             /**
              * @param {string} eventName Event name
-             * @param {giant.EventSpace} eventSpace Event space associated with event
+             * @param {$event.EventSpace} eventSpace Event space associated with event
              * @ignore
              */
             init: function (eventName, eventSpace) {
@@ -78,10 +78,10 @@ $oop.postpone(giant, 'RoutingEvent', function () {
         });
 });
 
-$oop.amendPostponed(giant, 'Event', function () {
+$oop.amendPostponed($event, 'Event', function () {
     "use strict";
 
-    giant.Event
+    $event.Event
         .addSurrogate(giant, 'RoutingEvent', function (eventName) {
             var prefix = 'route';
             return eventName && eventName.substr(0, prefix.length) === prefix;

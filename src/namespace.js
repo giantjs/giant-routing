@@ -15,12 +15,11 @@ var $utils = $utils || require('giant-utils');
 /** @namespace */
 var $data = $data || require('giant-data');
 
+/** @namespace */
+var $event = $event || require('giant-event');
+
 // TODO: Document.
 giant.usePushState = false;
-
-if (typeof require === 'function') {
-    require('giant-event');
-}
 
 /**
  * @namespace

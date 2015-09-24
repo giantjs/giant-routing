@@ -4,7 +4,7 @@ $oop.postpone(giant, 'Route', function () {
 
     var base = $oop.Base,
         self = base.extend()
-            .addTraitAndExtend(giant.Evented);
+            .addTraitAndExtend($event.Evented);
 
     /**
      * Creates a Route instance.
@@ -27,7 +27,7 @@ $oop.postpone(giant, 'Route', function () {
      * This is the class you'll ultimately use for routing, both for navigation and for intercepting routing events.
      * @class
      * @extends $oop.Base
-     * @extends giant.Evented
+     * @extends $event.Evented
      */
     giant.Route = self
         .addConstants(/** @lends giant.Route */{

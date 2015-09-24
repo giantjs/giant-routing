@@ -47,7 +47,7 @@ $oop.postpone(giant, 'SilentProxy', function () {
                 self.currentRoute = route;
 
                 // calling main location change handler with current last original event
-                giant.Router.create().onRouteChange(giant.originalEventStack.getLastEvent());
+                giant.Router.create().onRouteChange($event.originalEventStack.getLastEvent());
 
                 return this;
             }

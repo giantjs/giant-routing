@@ -32,7 +32,7 @@
 
         giant.Router.addMocks({
             onRouteChange: function (event) {
-                strictEqual(event, giant.originalEventStack.getLastEvent(),
+                strictEqual(event, $event.originalEventStack.getLastEvent(),
                     "should call main route change handler with last original event");
             }
         });

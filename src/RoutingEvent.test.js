@@ -5,7 +5,7 @@
     module("Routing Event");
 
     test("Instantiation", function () {
-        var eventSpace = giant.EventSpace.create(),
+        var eventSpace = $event.EventSpace.create(),
             event = giant.RoutingEvent.create('foo', eventSpace);
 
         ok(event.hasOwnProperty('beforeRoute'), "should add beforeRoute property");
@@ -15,20 +15,20 @@
     });
 
     test("Conversion from Event", function () {
-        var eventSpace = giant.EventSpace.create(),
+        var eventSpace = $event.EventSpace.create(),
             event;
 
-        event = giant.Event.create('foo', eventSpace);
+        event = $event.Event.create('foo', eventSpace);
         ok(!event.isA(giant.RoutingEvent),
             "should not return RoutingEvent instance for event names with non-matching prefix");
 
-        event = giant.Event.create('route.foo', eventSpace);
+        event = $event.Event.create('route.foo', eventSpace);
         ok(event.isA(giant.RoutingEvent),
             "should return RoutingEvent instance for event names with mathching prefix");
     });
 
     test("Before route setter", function () {
-        var event = giant.RoutingEvent.create('foo', giant.EventSpace.create());
+        var event = giant.RoutingEvent.create('foo', $event.EventSpace.create());
 
         throws(function () {
             event.setBeforeRoute('foo');
@@ -40,7 +40,7 @@
     });
 
     test("After route setter", function () {
-        var event = giant.RoutingEvent.create('foo', giant.EventSpace.create());
+        var event = giant.RoutingEvent.create('foo', $event.EventSpace.create());
 
         throws(function () {
             event.setAfterRoute('foo');
@@ -52,7 +52,7 @@
     });
 
     test("Cloning", function () {
-        var eventSpace = giant.EventSpace.create(),
+        var eventSpace = $event.EventSpace.create(),
             beforeRoute = 'foo'.toRoute(),
             afterRoute = 'bar'.toRoute(),
             event = giant.RoutingEvent.create('foo', eventSpace)
