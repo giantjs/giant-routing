@@ -100,7 +100,7 @@ $oop.postpone(giant, 'Router', function () {
 
                 /**
                  * Used in debounced navigation.
-                 * @type {giant.Debouncer}
+                 * @type {$utils.Debouncer}
                  */
                 this.navigationDebouncer = this.navigateToRoute.toDebouncer();
 
