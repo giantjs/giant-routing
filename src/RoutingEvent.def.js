@@ -50,7 +50,7 @@ giant.postpone(giant, 'RoutingEvent', function () {
              * @returns {giant.RoutingEvent}
              */
             setBeforeRoute: function (beforeRoute) {
-                giant.isRoute(beforeRoute, "Invalid before route");
+                $assertion.isRoute(beforeRoute, "Invalid before route");
                 this.beforeRoute = beforeRoute;
                 return this;
             },
@@ -61,7 +61,7 @@ giant.postpone(giant, 'RoutingEvent', function () {
              * @returns {giant.RoutingEvent}
              */
             setAfterRoute: function (afterRoute) {
-                giant.isRoute(afterRoute, "Invalid after route");
+                $assertion.isRoute(afterRoute, "Invalid after route");
                 this.afterRoute = afterRoute;
                 return this;
             },
@@ -91,7 +91,7 @@ giant.amendPostponed(giant, 'Event', function () {
 (function () {
     "use strict";
 
-    giant.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends giant */{
         /**
          * Determines whether the specified expression is a routing event.
          * @param {giant.RoutingEvent} expr

@@ -44,7 +44,7 @@ giant.postpone(giant, 'Route', function () {
              * @ignore
              */
             init: function (routePath) {
-                giant.isPath(routePath, "Invalid route path");
+                $assertion.isPath(routePath, "Invalid route path");
 
                 /**
                  * Path associated with route.
@@ -136,7 +136,7 @@ giant.amendPostponed(giant, 'Path', function () {
 (function () {
     "use strict";
 
-    giant.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends giant */{
         /** @param {giant.Route} expr */
         isRoute: function (expr) {
             return giant.Route.isBaseOf(expr);

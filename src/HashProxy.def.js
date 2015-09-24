@@ -45,7 +45,7 @@ giant.postpone(giant, 'HashProxy', function () {
              * @returns {giant.HashProxy}
              */
             setRoute: function (route) {
-                giant.isRoute(route, "Invalid route");
+                $assertion.isRoute(route, "Invalid route");
 
                 var currentRoute = this.getRoute(),
                     hash = '#' + route.toString();

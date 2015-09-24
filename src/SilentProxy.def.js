@@ -42,7 +42,7 @@ giant.postpone(giant, 'SilentProxy', function () {
              * @returns {giant.SilentProxy}
              */
             setRoute: function (route) {
-                giant.isRoute(route, "Invalid route");
+                $assertion.isRoute(route, "Invalid route");
 
                 self.currentRoute = route;
 

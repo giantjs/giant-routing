@@ -62,7 +62,7 @@ giant.postpone(giant, 'PushStateProxy', function () {
              * @returns {giant.PushStateProxy}
              */
             setRoute: function (route) {
-                giant.isRoute(route, "Invalid route");
+                $assertion.isRoute(route, "Invalid route");
 
                 var currentRoute = this.getRoute();
                 if (!currentRoute.equals(route)) {

@@ -128,7 +128,7 @@ giant.postpone(giant, 'Router', function () {
              * @returns {giant.Router}
              */
             navigateToRoute: function (route) {
-                giant.isRoute(route, "Invalid route");
+                $assertion.isRoute(route, "Invalid route");
 
                 if (!route.equals(this.currentRoute)) {
                     giant.routingEventSpace.spawnEvent(giant.EVENT_ROUTE_LEAVE)
@@ -147,7 +147,7 @@ giant.postpone(giant, 'Router', function () {
              * @returns {giant.Router}
              */
             navigateToRouteSilent: function (route) {
-                giant.isRoute(route, "Invalid route");
+                $assertion.isRoute(route, "Invalid route");
 
                 var routingEvent;
 
