@@ -63,7 +63,7 @@
             setItem: function (itemName, itemValue) {
                 equal(itemName, 'foo', "should set queue in collection");
                 deepEqual(itemValue, [], "should pass empty queue to item setter");
-                return giant.Collection.setItem.apply(this, arguments);
+                return $data.Collection.setItem.apply(this, arguments);
             }
         });
 
@@ -86,7 +86,7 @@
         router._nextRoutingEvents.addMocks({
             getItem: function (itemName) {
                 equal(itemName, 'foo', "should fetch queue from collection");
-                return giant.Collection.getItem.apply(this, arguments);
+                return $data.Collection.getItem.apply(this, arguments);
             }
         });
 
@@ -124,7 +124,7 @@
 
         ok(router.currentRoute.isA(giant.Route), "should set currentRoute property");
         ok(router.currentRoute.equals([].toRoute()), "should set currentRoute property to empty route");
-        ok(router._nextRoutingEvents.isA(giant.Collection), "should set _nextRoutingEvents property");
+        ok(router._nextRoutingEvents.isA($data.Collection), "should set _nextRoutingEvents property");
         deepEqual(router._nextRoutingEvents.items, {},
             "should set contents of _nextRoutingEvents property to empty object");
 

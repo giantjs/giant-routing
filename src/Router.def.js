@@ -107,10 +107,10 @@ $oop.postpone(giant, 'Router', function () {
                 /**
                  * Stores routing events to be triggered after hash change.
                  * (With optional custom payload.)
-                 * @type {giant.Collection}
+                 * @type {$data.Collection}
                  * @private
                  */
-                this._nextRoutingEvents = giant.Collection.create();
+                this._nextRoutingEvents = $data.Collection.create();
             },
 
             /**

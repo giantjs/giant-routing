@@ -8,7 +8,7 @@ $oop.postpone(giant, 'Route', function () {
 
     /**
      * Creates a Route instance.
-     * You may create route instances by conversion from string, array, and giant.Path instances
+     * You may create route instances by conversion from string, array, and $data.Path instances
      * by calling '.toRoute()' on them.
      * @example
      * 'user/joe'.toRoute().navigateTo();
@@ -16,7 +16,7 @@ $oop.postpone(giant, 'Route', function () {
      * [].toRoute().subscribeTo(...);
      * @name giant.Route.create
      * @function
-     * @param {giant.Path} routePath
+     * @param {$data.Path} routePath
      * @returns {giant.Route}
      */
 
@@ -40,7 +40,7 @@ $oop.postpone(giant, 'Route', function () {
         })
         .addMethods(/** @lends giant.Route# */{
             /**
-             * @param {giant.Path} routePath
+             * @param {$data.Path} routePath
              * @ignore
              */
             init: function (routePath) {
@@ -48,7 +48,7 @@ $oop.postpone(giant, 'Route', function () {
 
                 /**
                  * Path associated with route.
-                 * @type {giant.Path}
+                 * @type {$data.Path}
                  */
                 this.routePath = routePath;
 
@@ -119,10 +119,10 @@ $oop.postpone(giant, 'Route', function () {
         });
 });
 
-$oop.amendPostponed(giant, 'Path', function () {
+$oop.amendPostponed($data, 'Path', function () {
     "use strict";
 
-    giant.Path.addMethods(/** @lends giant.Path */{
+    $data.Path.addMethods(/** @lends $data.Path */{
         /**
          * Converts normal path to route path.
          * @returns {giant.Route}

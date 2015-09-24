@@ -68,7 +68,7 @@ $oop.postpone(giant, 'RoutingEvent', function () {
 
             /**
              * Clones event.
-             * @param {giant.Path} [currentPath]
+             * @param {$data.Path} [currentPath]
              */
             clone: function (currentPath) {
                 return base.clone.call(this, currentPath)
