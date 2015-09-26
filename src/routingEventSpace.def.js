@@ -1,4 +1,3 @@
-/*global $routing */
 $oop.postpone($routing, 'routingEventSpace', function () {
     "use strict";
 

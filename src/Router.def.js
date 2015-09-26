@@ -1,4 +1,3 @@
-/*global $routing, console, Q, window */
 $oop.postpone($routing, 'Router', function () {
     "use strict";
 

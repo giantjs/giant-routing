@@ -1,4 +1,3 @@
-/*global $routing */
 (function () {
     "use strict";
 

@@ -1,4 +1,3 @@
-/*global $routing, flock */
 (function () {
     "use strict";
 
