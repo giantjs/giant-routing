@@ -20,7 +20,6 @@
     "giant-assertion": "0.1.0",
     "giant-data": "0.1.0",
     "giant-event": "0.1.0",
-    "giant-namespace": "0.1.0",
     "giant-oop": "0.1.0",
     "giant-utils": "0.1.0",
     "q": "^1.4.1"
