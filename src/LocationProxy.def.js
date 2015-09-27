@@ -20,63 +20,9 @@ $oop.postpone($routing, 'LocationProxy', function () {
      * @extends $oop.Base
      */
     $routing.LocationProxy = self
-        .addPrivateMethods(/** @lends $routing.LocationProxy# */{
-            /**
-             * @returns {string}
-             * @private
-             */
-            _pathNameGetterProxy: function () {
-                return window.location.pathname;
-            },
-
-            /**
-             * Retrieves the current hash from the URL.
-             * @returns {string}
-             * @private
-             */
-            _hashGetterProxy: function () {
-                return window.location.hash;
-            }
-        })
         .addMethods(/** @lends $routing.LocationProxy# */{
             /** @ignore */
             init: function () {
-            },
-
-            /**
-             * Tests whether it is only the location path name contributing to the route.
-             * @returns {boolean}
-             */
-            isPathNameBased: function () {
-                return !this._hashGetterProxy();
-            },
-
-            /**
-             * Tests whether it is only the location hash contributing to the route.
-             * @returns {boolean}
-             */
-            isHashBased: function () {
-                return this._pathNameGetterProxy().length <= 1;
-            },
-
-            /**
-             * Fetches the current application route based on the current path and hash.
-             * @returns {$routing.Route}
-             */
-            getRoute: function () {
-                var pathName = this._pathNameGetterProxy().substr(1),
-                    hash = this._hashGetterProxy().substr(1),
-                    asArray = [];
-
-                if (pathName) {
-                    asArray.push(pathName);
-                }
-
-                if (hash) {
-                    asArray.push(hash);
-                }
-
-                return asArray.join('/').toRoute();
             }
         });
 

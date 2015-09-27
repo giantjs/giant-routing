@@ -21,6 +21,14 @@ $oop.postpone($routing, 'PushStateProxy', function () {
     $routing.PushStateProxy = self
         .addPrivateMethods(/** @lends $routing.PushStateProxy# */{
             /**
+             * @returns {string}
+             * @private
+             */
+            _pathNameGetterProxy: function () {
+                return window.location.pathname;
+            },
+
+            /**
              * @param {object} state
              * @param {string} title
              * @param {string} url
@@ -55,6 +63,16 @@ $oop.postpone($routing, 'PushStateProxy', function () {
             }
         })
         .addMethods(/** @lends $routing.PushStateProxy# */{
+            /**
+             * Retrieves the current application route based on location path.
+             * @returns {$routing.Route}
+             */
+            getRoute: function () {
+                var path = this._pathNameGetterProxy();
+                path = path.substr(1);
+                return path.toRoute();
+            },
+
             /**
              * Sets the current application route based on pushstate.
              * @param {$routing.Route} route

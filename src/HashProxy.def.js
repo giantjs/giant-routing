@@ -30,6 +30,15 @@ $oop.postpone($routing, 'HashProxy', function () {
             },
 
             /**
+             * Retrieves the current hash from the URL.
+             * @returns {string}
+             * @private
+             */
+            _hashGetterProxy: function () {
+                return window.location.hash;
+            },
+
+            /**
              * @param {string} location
              * @private
              */
@@ -39,27 +48,24 @@ $oop.postpone($routing, 'HashProxy', function () {
         })
         .addMethods(/** @lends $routing.HashProxy# */{
             /**
+             * Fetches the current application route based on URL hash.
+             * @returns {$routing.Route}
+             */
+            getRoute: function () {
+                var hash = this._hashGetterProxy(),
+                    path = hash.substr(1);
+                return path.toRoute();
+            },
+
+            /**
              * Sets the current application state via the URL hash.
              * @param {$routing.Route} route
              * @returns {$routing.HashProxy}
              */
             setRoute: function (route) {
                 $assertion.isRoute(route, "Invalid route");
-
-                var currentRoute = this.getRoute(),
-                    hash = '#' + route.toString();
-
-                if (!currentRoute.equals(route)) {
-                    if (this.isHashBased()) {
-                        // current route is hash-based
-                        // setting new route as hash
-                        this._hashSetterProxy(hash);
-                    } else {
-                        // hard re-directing to application root, with full route specified as hash
-                        this._documentLocationSetterProxy('/' + hash);
-                    }
-                }
-
+                var hash = '#' + route.toString();
+                this._hashSetterProxy(hash);
                 return this;
             },
 

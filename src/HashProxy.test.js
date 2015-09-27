@@ -13,40 +13,24 @@
         ok(locationProxy.isA($routing.HashProxy), "should return HashProxy instance");
     });
 
-    test("Changing route", function () {
-        expect(6);
-
-        var hashProxy = $routing.HashProxy.create();
-
-        throws(function () {
-            hashProxy.setRoute();
-        }, "should raise exception on missing arguments");
-
-        throws(function () {
-            hashProxy.setRoute('foo');
-        }, "should raise exception on invalid arguments");
-
-        hashProxy.addMocks({
-            getRoute: function () {
-                ok(true, "should fetch current route");
-                return ''.toRoute();
-            },
-
-            isHashBased: function () {
-                ok(true, "should check if route is purely hash based");
-                return true;
-            },
-
-            _hashSetterProxy: function (hash) {
-                equal(hash, '#foo', "should set URL hash");
+    test("Route getter", function () {
+        $routing.HashProxy.addMocks({
+            _hashGetterProxy: function () {
+                ok(true, "should fetch URL hash");
+                return '#foo';
             }
         });
 
-        strictEqual(hashProxy.setRoute('foo'.toRoute()), hashProxy, "should be chainable");
+        var route = $routing.HashProxy.create().getRoute();
+
+        ok(route.isA($routing.Route), "should return Route instance");
+        equal(route.toString(), 'foo', "should set route content");
+
+        $routing.HashProxy.removeMocks();
     });
 
-    test("Hard redirection", function () {
-        expect(6);
+    test("Changing route", function () {
+        expect(4);
 
         var hashProxy = $routing.HashProxy.create();
 
@@ -59,18 +43,8 @@
         }, "should raise exception on invalid arguments");
 
         hashProxy.addMocks({
-            getRoute: function () {
-                ok(true, "should fetch current route");
-                return ''.toRoute();
-            },
-
-            isHashBased: function () {
-                ok(true, "should check if route is purely hash based");
-                return false;
-            },
-
-            _documentLocationSetterProxy: function (hash) {
-                equal(hash, '/#foo', "should redirect to new page with hash in it");
+            _hashSetterProxy: function (hash) {
+                equal(hash, '#foo', "should set URL hash");
             }
         });
 
