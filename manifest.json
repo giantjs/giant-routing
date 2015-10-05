@@ -11,7 +11,7 @@
         "src/PushStateProxy.def.js",
         "src/SilentProxy.def.js",
         "src/Router.def.js",
-        "src/exports.def.js"
+        "src/exports.js"
       ]
     }
   }
