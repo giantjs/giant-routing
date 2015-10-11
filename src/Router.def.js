@@ -187,7 +187,7 @@ $oop.postpone($routing, 'Router', function () {
              * @returns {Q.Promise}
              */
             navigateToRouteDebounced: function (route) {
-                return this.navigationDebouncer.runDebounced(this.NAVIGATION_DEBOUNCE_DELAY, route);
+                return this.navigationDebouncer.schedule(this.NAVIGATION_DEBOUNCE_DELAY, route);
             },
 
             /**
