@@ -21,12 +21,6 @@ var $event = $event || require('giant-event');
 // TODO: Document.
 $routing.usePushState = false;
 
-/**
- * @namespace
- * @see https://github.com/kriskowal/q
- */
-var Q = Q || require('q', 'Q');
-
 if (typeof window === 'undefined') {
     /**
      * Built-in global window object.
