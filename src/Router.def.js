@@ -166,11 +166,11 @@ $oop.postpone($routing, 'Router', function () {
              * Asynchronous navigation allows the application to complete any operation
              * before leaving the current route.
              * @param {$routing.Route} route
-             * @returns {Q.Promise}
+             * @returns {$utils.Promise}
              */
             navigateToRouteAsync: function (route) {
                 var that = this,
-                    deferred = Q.defer();
+                    deferred = $utils.Deferred.create();
 
                 setTimeout(function () {
                     that.navigateToRoute(route);
@@ -184,10 +184,10 @@ $oop.postpone($routing, 'Router', function () {
              * Navigates to the specified route de-bounced. Subsequent calls to debounced navigation
              * within the allotted time frame will override previous ones.
              * @param {$routing.Route} route
-             * @returns {Q.Promise}
+             * @returns {$utils.Promise}
              */
             navigateToRouteDebounced: function (route) {
-                return this.navigationDebouncer.schedule(this.NAVIGATION_DEBOUNCE_DELAY, route);
+                return this.navigationDebouncer.schedule(route);
             },
 
             /**

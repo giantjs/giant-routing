@@ -91,7 +91,7 @@ $oop.postpone($routing, 'Route', function () {
             /**
              * Navigates app to current route asynchronously.
              * Synchronous operations following the call to this method will complete before leaving the current route.
-             * @returns {Q.Promise} Resolves eventually when the async call goes through.
+             * @returns {$utils.Promise} Resolves eventually when the async call goes through.
              */
             navigateToAsync: function () {
                 return $routing.Router.create()
@@ -101,7 +101,7 @@ $oop.postpone($routing, 'Route', function () {
             /**
              * Navigates app to current route debounced. Subsequent calls to this method on equivalent routes
              * within the time window specified by `Router` will cancel and override previous ones.
-             * @returns {Q.Promise} Resolves eventually when the last debounced call goes through.
+             * @returns {$utils.Promise} Resolves eventually when the last debounced call goes through.
              */
             navigateToDebounced: function () {
                 return $routing.Router.create()
