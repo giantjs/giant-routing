@@ -49,73 +49,6 @@
         equal(router.currentRoute.toString(), '', "should not alter the current route");
     });
 
-    test("Pushing first routing event", function () {
-        expect(4);
-
-        var routingEvent = $routing.routingEventSpace.spawnEvent('route.hello');
-
-        router._nextRoutingEvents.addMocks({
-            getItem: function (itemName) {
-                equal(itemName, 'foo', "should fetch queue from collection");
-            },
-
-            setItem: function (itemName, itemValue) {
-                equal(itemName, 'foo', "should set queue in collection");
-                deepEqual(itemValue, [], "should pass empty queue to item setter");
-                return $data.Collection.setItem.apply(this, arguments);
-            }
-        });
-
-        router._pushRoutingEvent('foo', routingEvent);
-
-        router._nextRoutingEvents.removeMocks();
-
-        deepEqual(router._nextRoutingEvents.getItem('foo'), [routingEvent],
-            "should add event to specified queue");
-    });
-
-    test("Pushing subsequent routing events", function () {
-        expect(2);
-
-        var routingEvent1 = $routing.routingEventSpace.spawnEvent('route.hello'),
-            routingEvent2 = $routing.routingEventSpace.spawnEvent('route.world');
-
-        router._pushRoutingEvent('foo', routingEvent1);
-
-        router._nextRoutingEvents.addMocks({
-            getItem: function (itemName) {
-                equal(itemName, 'foo', "should fetch queue from collection");
-                return $data.Collection.getItem.apply(this, arguments);
-            }
-        });
-
-        router._pushRoutingEvent('foo', routingEvent2);
-
-        router._nextRoutingEvents.removeMocks();
-
-        deepEqual(router._nextRoutingEvents.getItem('foo'), [routingEvent1, routingEvent2],
-            "should add event to specified queue");
-    });
-
-    test("Shifting routing event in queue", function () {
-        expect(2);
-
-        var queue = [1, 2, 3, 4];
-
-        router._nextRoutingEvents.addMocks({
-            getItem: function (itemName) {
-                equal(itemName, 'foo', "should fetch queue from collection");
-                return queue;
-            }
-        });
-
-        router._shiftRoutingEvent('foo');
-
-        router._nextRoutingEvents.removeMocks();
-
-        deepEqual(queue, [2, 3, 4], "should shift specified queue contents by 1");
-    });
-
     test("Instantiation", function () {
         $routing.Router.clearInstanceRegistry();
 
@@ -123,9 +56,6 @@
 
         ok(router.currentRoute.isA($routing.Route), "should set currentRoute property");
         ok(router.currentRoute.equals([].toRoute()), "should set currentRoute property to empty route");
-        ok(router._nextRoutingEvents.isA($data.Collection), "should set _nextRoutingEvents property");
-        deepEqual(router._nextRoutingEvents.items, {},
-            "should set contents of _nextRoutingEvents property to empty object");
 
         strictEqual($routing.Router.create(), router, "should be singleton");
     });
@@ -290,52 +220,15 @@
     });
 
     test("Route leave handler", function () {
-        expect(8);
+        expect(1);
 
         var leaveEvent = $routing.routingEventSpace.spawnEvent($routing.EVENT_ROUTE_LEAVE)
                 .setBeforeRoute('foo/bar'.toRoute())
-                .setAfterRoute('hello/world'.toRoute()),
-            routingEvent;
-
-        $routing.RoutingEvent.addMocks({
-            setOriginalEvent: function (originalEvent) {
-                routingEvent = this;
-
-                equal(this.eventName, $routing.EVENT_ROUTE_CHANGE, "should spawn a route-leave event");
-                strictEqual(originalEvent, leaveEvent,
-                    "should set original event to leave event");
-                return this;
-            },
-
-            setPayloadItems: function (payload) {
-                strictEqual(payload, leaveEvent.payload,
-                    "should set payload to leave event's payload");
-                return this;
-            },
-
-            setBeforeRoute: function (beforeRoute) {
-                strictEqual(beforeRoute, leaveEvent.beforeRoute,
-                    "should set before route to leave event's before route");
-                return this;
-            },
-
-            setAfterRoute: function (afterRoute) {
-                strictEqual(afterRoute, leaveEvent.afterRoute,
-                    "should set after route to leave event's after route");
-                return this;
-            }
-        });
+                .setAfterRoute('hello/world'.toRoute());
 
         $routing.HashProxy.addMocks({
             setRoute: function (route) {
                 equal(route.toString(), 'hello/world', "should set the current route");
-            }
-        });
-
-        router.addMocks({
-            _pushRoutingEvent: function (route, event) {
-                equal(route.toString(), 'hello/world', "should pass right route to event pusher");
-                strictEqual(event, routingEvent, "should push route change event to queue");
             }
         });
 
@@ -346,23 +239,23 @@
     });
 
     test("Route change handler when URL has hash", function () {
-        var event = $routing.routingEventSpace.spawnEvent('giant.Router.route.foo');
+        expect(4);
+
+        var event = $routing.routingEventSpace.spawnEvent('giant.Router.route.foo'),
+            afterRoute = 'foo/bar'.toRoute();
 
         $routing.HashProxy.addMocks({
             getRoute: function () {
                 ok(true, "should get route from proxy");
-                return 'foo/bar'.toRoute();
+                return afterRoute;
             }
         });
 
         router.addMocks({
-            _shiftRoutingEvent: function (route) {
-                equal(route.toString(), 'foo/bar', "should get next event matching route");
-                return event;
-            },
-
             _applyRouteChange: function (routingEvent) {
-                strictEqual(routingEvent, event, "should apply routing event");
+                ok(true, "should apply routing event");
+                strictEqual(routingEvent.beforeRoute, this.currentRoute, "should set beforeRoute");
+                strictEqual(routingEvent.afterRoute, afterRoute, "should set afterRoute");
             }
         });
 
@@ -372,7 +265,7 @@
     });
 
     test("Hash change handler with no hash", function () {
-        expect(5);
+        expect(4);
 
         var event = $routing.routingEventSpace.spawnEvent('route.foo'),
             hashChangeEvent = {};
@@ -384,11 +277,6 @@
         });
 
         router.addMocks({
-            _shiftRoutingEvent: function () {
-                ok(true, "should get next event matching hash");
-                return undefined;
-            },
-
             _applyRouteChange: function (routingEvent) {
                 ok(routingEvent.isA($routing.RoutingEvent), "should apply a routing event");
                 ok(routingEvent.beforeRoute.equals('foo/bar'.toRoute()), "should set before route to old hash");

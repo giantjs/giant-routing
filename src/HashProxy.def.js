@@ -96,6 +96,7 @@ $oop.amendPostponed($routing, 'LocationProxy', function () {
         // reacting to hash changes
         window.addEventListener('hashchange', function (event) {
             if (!$routing.usePushState) {
+                event.originalEvent = $event.originalEventStack.getLastEvent();
                 $routing.LocationProxy.create().onRouteChange(event);
             }
         });

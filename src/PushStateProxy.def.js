@@ -59,6 +59,7 @@ $oop.postpone($routing, 'PushStateProxy', function () {
             _triggerFauxPopState: function () {
                 var customEvent = this._createEventProxy('CustomEvent');
                 customEvent.initCustomEvent('faux-popstate', true, true, {});
+                customEvent.originalEvent = $event.originalEventStack.getLastEvent();
                 this._dispatchEventProxy(customEvent);
             }
         })
@@ -116,6 +117,7 @@ $oop.amendPostponed($routing, 'LocationProxy', function () {
         // reacting to hash changes
         window.addEventListener('popstate', function (event) {
             if ($routing.usePushState) {
+                event.originalEvent = $event.originalEventStack.getLastEvent();
                 $routing.LocationProxy.create().onRouteChange(event);
             }
         });

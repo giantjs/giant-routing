@@ -46,41 +46,6 @@ $oop.postpone($routing, 'Router', function () {
                     // triggering events for changed route
                     routingEvent.triggerSync(afterRoute.eventPath);
                 }
-            },
-
-            /**
-             * Adds routing event to the buffer for retrieval on route change matching the specified route.
-             * @param {$routing.Route} route
-             * @param {$routing.RoutingEvent} routingEvent
-             * @private
-             */
-            _pushRoutingEvent: function (route, routingEvent) {
-                var nextRoutingEvents = this._nextRoutingEvents,
-                    serializedRoute = route.toString(),
-                    queue = nextRoutingEvents.getItem(serializedRoute);
-
-                if (!queue) {
-                    queue = [];
-                    nextRoutingEvents.setItem(serializedRoute, queue);
-                }
-
-                queue.push(routingEvent);
-            },
-
-            /**
-             * Retrieves next available routing event associated with the specified hash.
-             * @param {$routing.Route} route
-             * @returns {*}
-             * @private
-             */
-            _shiftRoutingEvent: function (route) {
-                var queue = this._nextRoutingEvents.getItem(route.toString());
-
-                if (queue && queue.length) {
-                    return queue.shift();
-                } else {
-                    return undefined;
-                }
             }
         })
         .addMethods(/** @lends $routing.Router# */{
@@ -102,14 +67,6 @@ $oop.postpone($routing, 'Router', function () {
                  * @type {$utils.Debouncer}
                  */
                 this.navigationDebouncer = this.navigateToRoute.toDebouncer();
-
-                /**
-                 * Stores routing events to be triggered after hash change.
-                 * (With optional custom payload.)
-                 * @type {$data.Collection}
-                 * @private
-                 */
-                this._nextRoutingEvents = $data.Collection.create();
             },
 
             /**
@@ -200,20 +157,8 @@ $oop.postpone($routing, 'Router', function () {
                 }
 
                 // resuming default behavior
-                // triggering route change
-                var route = event.afterRoute,
-                    routeChangeEvent = $routing.routingEventSpace.spawnEvent($routing.EVENT_ROUTE_CHANGE)
-                        .setOriginalEvent(event)
-                        .setPayloadItems(event.payload)
-                        .setBeforeRoute(event.beforeRoute)
-                        .setAfterRoute(event.afterRoute);
-
-                // pushing routing event containing custom information about routing
-                // after hash change this will be taken
-                this._pushRoutingEvent(route, routeChangeEvent);
-
                 // modifying browser hash
-                this.locationProxy.setRoute(route);
+                this.locationProxy.setRoute(event.afterRoute);
             },
 
             /**
@@ -223,14 +168,9 @@ $oop.postpone($routing, 'Router', function () {
             onRouteChange: function (event) {
                 var link = $event.pushOriginalEvent(event),
                     newRoute = this.locationProxy.getRoute(),
-                    routingEvent = this._shiftRoutingEvent(newRoute);
-
-                if (!routingEvent) {
                     routingEvent = $routing.routingEventSpace.spawnEvent($routing.EVENT_ROUTE_CHANGE)
                         .setBeforeRoute(this.currentRoute)
-                        .setAfterRoute(newRoute)
-                        .setOriginalEvent(event);
-                }
+                        .setAfterRoute(newRoute);
 
                 this._applyRouteChange(routingEvent);
 
